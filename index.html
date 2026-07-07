@@ -413,9 +413,10 @@
     width:100%;height:100%;
     object-fit:cover;
     transition:transform .45s ease;
+    transform:translateY(var(--py, 0px)) scale(1.09); /* Reserve für Scroll-Parallax */
   }
   .gallery__tile:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(29,33,30,0.14);}
-  .gallery__tile:hover img{transform:scale(1.05);}
+  .gallery__tile:hover img{transform:translateY(var(--py, 0px)) scale(1.14);}
   .gallery__tile figcaption{
     position:absolute;left:0;right:0;bottom:0;
     padding:26px 14px 10px;
@@ -774,9 +775,63 @@
   .hero .media-bg{z-index:0;}
   .hero .media-bg video{--media-bg-opacity:0.38;}
   .booking .media-bg video{--media-bg-opacity:0.26;}
+  .rating-band .media-bg video{--media-bg-opacity:0.30;}
 
   /* scroll-parallax hooks (JS setzt transform auf die Felder, nicht die Orbs) */
   .parallax-field{will-change:transform;}
+
+  /* ---------- scroll progress ---------- */
+  .scroll-progress{
+    position:fixed;top:0;left:0;z-index:90;
+    height:3px;width:0%;
+    background:linear-gradient(90deg, var(--brass-deep), var(--brass), var(--brass-soft));
+    box-shadow:0 0 8px rgba(200,144,53,0.55);
+    pointer-events:none;
+  }
+
+  /* ---------- goldstaub-partikel ---------- */
+  .dust-canvas{
+    position:fixed;inset:0;
+    width:100%;height:100%;
+    z-index:55;
+    pointer-events:none;
+    mix-blend-mode:screen;
+  }
+
+  /* ---------- gestaffelte reveals ---------- */
+  .benefit-cards .benefit:nth-child(1){transition-delay:0s;}
+  .benefit-cards .benefit:nth-child(2){transition-delay:.12s;}
+  .benefit-cards .benefit:nth-child(3){transition-delay:.24s;}
+  .amenity-grid .amenity:nth-child(1){transition-delay:0s;}
+  .amenity-grid .amenity:nth-child(2){transition-delay:.07s;}
+  .amenity-grid .amenity:nth-child(3){transition-delay:.14s;}
+  .amenity-grid .amenity:nth-child(4){transition-delay:.21s;}
+  .amenity-grid .amenity:nth-child(5){transition-delay:.28s;}
+  .amenity-grid .amenity:nth-child(6){transition-delay:.35s;}
+  .amenity-grid .amenity:nth-child(7){transition-delay:.42s;}
+  .amenity-grid .amenity:nth-child(8){transition-delay:.49s;}
+  .location__facts li{
+    opacity:0;transform:translateX(-10px);
+    transition:opacity .5s ease,transform .5s ease;
+  }
+  .location-text.is-visible .location__facts li{opacity:1;transform:translateX(0);}
+  .location__facts li:nth-child(1){transition-delay:.1s;}
+  .location__facts li:nth-child(2){transition-delay:.18s;}
+  .location__facts li:nth-child(3){transition-delay:.26s;}
+  .location__facts li:nth-child(4){transition-delay:.34s;}
+  .location__facts li:nth-child(5){transition-delay:.42s;}
+  .location__facts li:nth-child(6){transition-delay:.5s;}
+  .faq details{
+    opacity:0;transform:translateY(10px);
+    transition:opacity .5s ease,transform .5s ease;
+  }
+  .faq.is-visible details{opacity:1;transform:translateY(0);}
+  .faq details:nth-of-type(1){transition-delay:.05s;}
+  .faq details:nth-of-type(2){transition-delay:.12s;}
+  .faq details:nth-of-type(3){transition-delay:.19s;}
+  .faq details:nth-of-type(4){transition-delay:.26s;}
+  .faq details:nth-of-type(5){transition-delay:.33s;}
+  .faq details:nth-of-type(6){transition-delay:.4s;}
 
   /* ---------- reduced motion ---------- */
   @media (prefers-reduced-motion:reduce){
@@ -790,10 +845,17 @@
     .hero__canvas{display:none;}
     .tilt-el{transition:none;}
     .media-bg{display:none;}
+    .scroll-progress,.dust-canvas{display:none;}
+    .gallery__tile img{transform:none;transition:none;}
+    .location__facts li,.faq details{opacity:1;transform:none;transition:none;}
+    .benefit,.amenity{transition-delay:0s;}
   }
 </style>
 </head>
 <body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+<canvas class="dust-canvas" id="dustCanvas" aria-hidden="true"></canvas>
 
 <header class="site-header">
   <div class="wrap">
@@ -944,6 +1006,10 @@
 </section>
 
 <section class="section" id="galerie">
+  <div class="bg-orb-field" aria-hidden="true">
+    <div class="bg-orb bg-orb--brass-soft" style="width:360px;height:360px;top:-120px;left:-110px;"></div>
+    <div class="bg-orb bg-orb--pine" style="width:300px;height:300px;bottom:-120px;right:-90px;animation-delay:-11s;"></div>
+  </div>
   <div class="wrap">
     <div class="section__head reveal">
       <span class="overline">Galerie</span>
@@ -992,6 +1058,9 @@
 </section>
 
 <section class="section section--tint" id="lage">
+  <div class="bg-orb-field" aria-hidden="true">
+    <div class="bg-orb bg-orb--brass" style="width:340px;height:340px;top:-130px;right:-90px;animation-delay:-5s;"></div>
+  </div>
   <div class="wrap">
     <div class="location-grid">
       <div class="location-text reveal">
@@ -1019,6 +1088,7 @@
 </section>
 
 <section class="rating-band">
+  <div class="media-bg" id="ratingMediaBg" aria-hidden="true"></div>
   <div class="bg-orb-field" aria-hidden="true">
     <div class="bg-orb bg-orb--brass-soft" style="width:460px;height:460px;top:-180px;left:50%;margin-left:-230px;"></div>
   </div>
@@ -1030,6 +1100,10 @@
 </section>
 
 <section class="section" id="faq">
+  <div class="bg-orb-field" aria-hidden="true">
+    <div class="bg-orb bg-orb--pine" style="width:320px;height:320px;top:-110px;left:-100px;animation-delay:-16s;"></div>
+    <div class="bg-orb bg-orb--brass" style="width:280px;height:280px;bottom:-100px;right:-80px;animation-delay:-3s;"></div>
+  </div>
   <div class="wrap">
     <div class="section__head reveal" style="margin-left:auto;margin-right:auto;text-align:center;">
       <span class="overline">Häufige Fragen</span>
@@ -1435,29 +1509,18 @@
     });
   }
 
-  // ---------- Ambiente-Medien (Higgsfield-generiert, CDN-gehostet) ----------
+  // ---------- Ambiente-Videos (Higgsfield-generiert, CDN-gehostet) ----------
   var NERA_CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_3G8m1bxNBqhjlyBCY2gFUlzpzbo/';
   var NERA_MEDIA = {
     heroVideo: NERA_CDN + 'hf_20260707_183155_d857c55d-e4a7-40a6-90d2-551214ad24a0.mp4',
-    bookingVideo: NERA_CDN + 'hf_20260707_183207_509abbd6-9c07-4995-b75a-823a6e0ff7c8.mp4',
-    hires: {
-      'assets/img/wohnzimmer.jpg':   NERA_CDN + 'hf_20260707_183527_af6cc1d3-11f3-439c-a6a9-33166a90bee5_min.webp',
-      'assets/img/terrasse.jpg':     NERA_CDN + 'hf_20260707_183529_a2d5b762-1c2e-479b-8f71-1b7539e3fafb_min.webp',
-      'assets/img/kueche.jpg':       NERA_CDN + 'hf_20260707_183530_cffd96bb-46e0-4bb6-889a-b8b3b589e333_min.webp',
-      'assets/img/schlafzimmer.jpg': NERA_CDN + 'hf_20260707_183531_830c6467-8515-4483-a0b2-7681306800b7_min.webp',
-      'assets/img/einzelbetten.jpg': NERA_CDN + 'hf_20260707_183533_36118061-5ce3-4683-8465-b4107bf5f979_min.webp',
-      'assets/img/essbereich.jpg':   NERA_CDN + 'hf_20260707_183534_6103a29f-ce17-4439-8c2a-16d94f94b9c8_min.webp',
-      'assets/img/bad.jpg':          NERA_CDN + 'hf_20260707_183535_36c492e3-bfde-428e-ac1f-79025ae5c140_min.webp',
-      'assets/img/garten.jpg':       NERA_CDN + 'hf_20260707_184020_4de0350e-8920-4c09-a09b-3f3b9af1ed04_min.webp',
-      'assets/img/haus.jpg':         NERA_CDN + 'hf_20260707_183632_8c573542-d3a3-40b5-9317-c54edc6b3499_min.webp'
-    }
+    ratingVideo: NERA_CDN + 'hf_20260707_183155_d857c55d-e4a7-40a6-90d2-551214ad24a0.mp4', /* gleiche Datei = Browser-Cache */
+    bookingVideo: NERA_CDN + 'hf_20260707_183207_509abbd6-9c07-4995-b75a-823a6e0ff7c8.mp4'
   };
 
-  // Hintergrund-Videos: lazy, stumm, loopend; bei Fehler bleibt der Verlauf
+  // Hintergrund-Videos: lazy, stumm, loopend; laufen auch mobil; bei Fehler bleibt der Verlauf
   function initBgVideo(containerId, srcUrl){
     if (!srcUrl) return;
     if (prefersReduced) return;
-    if (window.innerWidth < 760) return; // Mobil: Daten & Akku sparen
     var container = document.getElementById(containerId);
     if (!container) return;
     var started = false;
@@ -1484,68 +1547,113 @@
         entries.forEach(function(entry){
           if (entry.isIntersecting){ start(); io.disconnect(); }
         });
-      }, {rootMargin: '300px'});
+      }, {rootMargin: '400px'});
       io.observe(container.parentElement);
     } else {
       start();
     }
   }
   initBgVideo('heroMediaBg', NERA_MEDIA.heroVideo);
+  initBgVideo('ratingMediaBg', NERA_MEDIA.ratingVideo);
   initBgVideo('bookingMediaBg', NERA_MEDIA.bookingVideo);
 
-  // Galerie: 2K-Versionen nachladen, sobald die Kachel in Sichtweite kommt
-  // (Fallback: lokale Datei bleibt, wenn das CDN nicht erreichbar ist)
-  function swapToHires(img, hiUrl){
-    var hi = new Image();
-    hi.onload = function(){ img.src = hiUrl; img.dataset.hires = '1'; };
-    hi.src = hiUrl;
-  }
-  (function initHiresGallery(){
-    var entries = Object.keys(NERA_MEDIA.hires).map(function(localSrc){
-      var img = document.querySelector('.gallery__tile img[src="' + localSrc + '"]');
-      return img ? {img: img, url: NERA_MEDIA.hires[localSrc]} : null;
-    }).filter(Boolean);
-    if (!entries.length) return;
-    if ('IntersectionObserver' in window){
-      var hiresIO = new IntersectionObserver(function(obs){
-        obs.forEach(function(entry){
-          if (!entry.isIntersecting) return;
-          var found = entries.find(function(e){ return e.img === entry.target; });
-          if (found){ swapToHires(found.img, found.url); }
-          hiresIO.unobserve(entry.target);
-        });
-      }, {rootMargin: '400px'});
-      entries.forEach(function(e){ hiresIO.observe(e.img); });
-    } else {
-      entries.forEach(function(e){ swapToHires(e.img, e.url); });
-    }
-  })();
+  // ---------- Scroll-Fortschrittsbalken ----------
+  var progressBar = document.getElementById('scrollProgress');
 
-  // Scroll-Parallax: Orb-Felder und Hero-Canvas driften sanft beim Scrollen
+  // ---------- Scroll-Parallax über die ganze Seite ----------
+  // Orb-Felder, Hero-Canvas, Münze und Galerie-Bilder driften beim Scrollen
+  var parallaxTargets = [];
+  var galleryImgs = [];
   if (!prefersReduced){
-    var parallaxTargets = [];
     document.querySelectorAll('.bg-orb-field').forEach(function(field, i){
       field.classList.add('parallax-field');
-      parallaxTargets.push({el: field, speed: (i % 2 === 0 ? 0.06 : -0.05), parent: field.parentElement});
+      parallaxTargets.push({el: field, speed: (i % 2 === 0 ? 0.07 : -0.06), parent: field.parentElement});
     });
     var heroCanvasEl = document.getElementById('heroCanvas');
     if (heroCanvasEl){ parallaxTargets.push({el: heroCanvasEl, speed: 0.10, parent: heroCanvasEl.parentElement}); }
-    var ticking = false;
-    function applyParallax(){
-      ticking = false;
-      var vh = window.innerHeight;
-      parallaxTargets.forEach(function(t){
-        var rect = t.parent.getBoundingClientRect();
-        if (rect.bottom < -100 || rect.top > vh + 100) return;
-        var progress = (rect.top + rect.height/2 - vh/2) / vh; // -x..x, 0 = Mitte
-        t.el.style.transform = 'translateY(' + (progress * t.speed * -300).toFixed(1) + 'px)';
-      });
-    }
-    window.addEventListener('scroll', function(){
-      if (!ticking){ ticking = true; requestAnimationFrame(applyParallax); }
-    }, {passive:true});
-    applyParallax();
+    galleryImgs = Array.prototype.slice.call(document.querySelectorAll('.gallery__tile img'));
   }
+  var scrollTicking = false;
+  function onScrollFx(){
+    scrollTicking = false;
+    var vh = window.innerHeight;
+    // Fortschrittsbalken
+    if (progressBar){
+      var docH = document.documentElement.scrollHeight - vh;
+      var pct = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+      progressBar.style.width = Math.min(100, Math.max(0, pct)).toFixed(2) + '%';
+    }
+    // Parallax-Felder
+    parallaxTargets.forEach(function(t){
+      var rect = t.parent.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+      var progress = (rect.top + rect.height/2 - vh/2) / vh;
+      t.el.style.transform = 'translateY(' + (progress * t.speed * -300).toFixed(1) + 'px)';
+    });
+    // Galerie: Bilder wandern sanft in ihren Kacheln (Ken-Burns beim Scrollen)
+    galleryImgs.forEach(function(img){
+      var rect = img.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > vh) return;
+      var progress = (rect.top + rect.height/2 - vh/2) / vh; // -0.5..0.5 sichtbar
+      img.style.setProperty('--py', (progress * -14).toFixed(2) + 'px');
+    });
+  }
+  window.addEventListener('scroll', function(){
+    if (!scrollTicking){ scrollTicking = true; requestAnimationFrame(onScrollFx); }
+  }, {passive:true});
+  window.addEventListener('resize', onScrollFx);
+  onScrollFx();
+
+  // ---------- Goldstaub: dezente Partikel über die ganze Seite ----------
+  (function initDust(){
+    if (prefersReduced) return;
+    var canvas = document.getElementById('dustCanvas');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var W, H, dpr;
+    var COUNT = window.innerWidth < 760 ? 16 : 34;
+    var parts = [];
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    function spawn(randomY){
+      return {
+        x: Math.random() * W,
+        y: randomY ? Math.random() * H : H + 8,
+        r: 0.8 + Math.random() * 1.8,
+        vy: -(0.08 + Math.random() * 0.22),
+        vx: (Math.random() - 0.5) * 0.12,
+        drift: Math.random() * Math.PI * 2,
+        alpha: 0.15 + Math.random() * 0.35
+      };
+    }
+    for (var i = 0; i < COUNT; i++){ parts.push(spawn(true)); }
+    var dustRunning = !document.hidden;
+    document.addEventListener('visibilitychange', function(){ dustRunning = !document.hidden; });
+    function tick(){
+      requestAnimationFrame(tick);
+      if (!dustRunning) return;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < parts.length; i++){
+        var p = parts[i];
+        p.drift += 0.01;
+        p.x += p.vx + Math.sin(p.drift) * 0.15;
+        p.y += p.vy;
+        if (p.y < -10 || p.x < -10 || p.x > W + 10){ parts[i] = spawn(false); continue; }
+        var tw = 0.75 + Math.sin(p.drift * 2.2) * 0.25; // Funkeln
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(216,166,80,' + (p.alpha * tw).toFixed(3) + ')';
+        ctx.fill();
+      }
+    }
+    tick();
+  })();
 </script>
 
 <script type="module">
