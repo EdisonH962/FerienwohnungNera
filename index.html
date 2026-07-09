@@ -766,7 +766,7 @@
     position:absolute;top:50%;left:50%;
     min-width:100%;min-height:100%;
     width:auto;height:auto;
-    transform:translate(-50%,-50%) scale(1.06);
+    transform:translate(-50%, calc(-50% + var(--vpy, 0px))) scale(1.12);
     object-fit:cover;
     opacity:0;
     transition:opacity 1.8s ease;
@@ -780,6 +780,14 @@
   .hero .media-bg video{--media-bg-opacity:0.38;}
   .booking .media-bg video{--media-bg-opacity:0.26;}
   .rating-band .media-bg video{--media-bg-opacity:0.30;}
+  /* Helle Sektionen: Video hinter Creme-Schleier — Text behält >=4.5:1 Kontrast */
+  .media-bg--light video{--media-bg-opacity:0.24;}
+  .media-bg--light::after{
+    background:linear-gradient(180deg, rgba(248,245,239,0.85) 0%, rgba(248,245,239,0.6) 45%, rgba(248,245,239,0.85) 100%);
+  }
+  .media-bg--tint::after{
+    background:linear-gradient(180deg, rgba(239,234,224,0.87) 0%, rgba(239,234,224,0.64) 45%, rgba(239,234,224,0.87) 100%);
+  }
 
   /* scroll-parallax hooks (JS setzt transform auf die Felder, nicht die Orbs) */
   .parallax-field{will-change:transform;}
@@ -934,6 +942,7 @@
 </section>
 
 <section class="section" id="ueber">
+  <div class="media-bg media-bg--light" id="ueberMediaBg" aria-hidden="true"></div>
   <div class="bg-orb-field" aria-hidden="true">
     <div class="bg-orb bg-orb--pine" style="width:420px;height:420px;top:-140px;right:-120px;"></div>
   </div>
@@ -964,6 +973,7 @@
 </section>
 
 <section class="section section--tint" id="ausstattung">
+  <div class="media-bg media-bg--light media-bg--tint" id="ausstattungMediaBg" aria-hidden="true"></div>
   <div class="bg-orb-field" aria-hidden="true">
     <div class="bg-orb bg-orb--brass" style="width:380px;height:380px;bottom:-160px;left:-100px;"></div>
   </div>
@@ -1010,6 +1020,7 @@
 </section>
 
 <section class="section" id="galerie">
+  <div class="media-bg media-bg--light" id="galerieMediaBg" aria-hidden="true"></div>
   <div class="bg-orb-field" aria-hidden="true">
     <div class="bg-orb bg-orb--brass-soft" style="width:360px;height:360px;top:-120px;left:-110px;"></div>
     <div class="bg-orb bg-orb--pine" style="width:300px;height:300px;bottom:-120px;right:-90px;animation-delay:-11s;"></div>
@@ -1074,6 +1085,7 @@
 </section>
 
 <section class="section section--tint" id="lage">
+  <div class="media-bg media-bg--light media-bg--tint" id="lageMediaBg" aria-hidden="true"></div>
   <div class="bg-orb-field" aria-hidden="true">
     <div class="bg-orb bg-orb--brass" style="width:340px;height:340px;top:-130px;right:-90px;animation-delay:-5s;"></div>
   </div>
@@ -1116,6 +1128,7 @@
 </section>
 
 <section class="section" id="faq">
+  <div class="media-bg media-bg--light" id="faqMediaBg" aria-hidden="true"></div>
   <div class="bg-orb-field" aria-hidden="true">
     <div class="bg-orb bg-orb--pine" style="width:320px;height:320px;top:-110px;left:-100px;animation-delay:-16s;"></div>
     <div class="bg-orb bg-orb--brass" style="width:280px;height:280px;bottom:-100px;right:-80px;animation-delay:-3s;"></div>
@@ -1530,8 +1543,14 @@
   var NERA_MEDIA = {
     heroVideo: NERA_CDN + 'hf_20260707_183155_d857c55d-e4a7-40a6-90d2-551214ad24a0.mp4',
     ratingVideo: NERA_CDN + 'hf_20260707_183155_d857c55d-e4a7-40a6-90d2-551214ad24a0.mp4', /* gleiche Datei = Browser-Cache */
-    bookingVideo: NERA_CDN + 'hf_20260707_183207_509abbd6-9c07-4995-b75a-823a6e0ff7c8.mp4'
+    bookingVideo: NERA_CDN + 'hf_20260707_183207_509abbd6-9c07-4995-b75a-823a6e0ff7c8.mp4',
+    meadowVideo: NERA_CDN + 'hf_20260709_201934_4ba3c112-5b0d-4ef3-b9e4-88ea71a139fd.mp4',  /* helle Sommerwiese — Über/Galerie/FAQ */
+    curtainVideo: NERA_CDN + 'hf_20260709_201958_c9ee885d-8729-4f70-9ed1-ff3968979acf.mp4', /* Sonnenlicht durch Gardinen — Ausstattung/Lage */
+    houseModel: 'https://d3u0tzju9qaucj.cloudfront.net/7d051b5a-7bfe-49fe-a484-24e7b3a9458a/a296a3e1-a1dc-4798-b274-2bb1e8ba2fcd.glb' /* 3D-Modell des Hauses für den Hero */
   };
+
+  // Video-Layer, die beim Scrollen mitdriften (--vpy wird in onScrollFx gesetzt)
+  var mediaParallax = [];
 
   // Hintergrund-Videos: lazy, stumm, loopend; laufen auch mobil; bei Fehler bleibt der Verlauf
   function initBgVideo(containerId, srcUrl){
@@ -1550,6 +1569,7 @@
         var p = v.play();
         if (p && p.catch) p.catch(function(){ container.removeChild(v); });
         container.classList.add('is-playing');
+        if (mediaParallax.indexOf(container) === -1) mediaParallax.push(container);
       });
       v.addEventListener('error', function(){
         if (v.parentNode) v.parentNode.removeChild(v);
@@ -1572,6 +1592,11 @@
   initBgVideo('heroMediaBg', NERA_MEDIA.heroVideo);
   initBgVideo('ratingMediaBg', NERA_MEDIA.ratingVideo);
   initBgVideo('bookingMediaBg', NERA_MEDIA.bookingVideo);
+  initBgVideo('ueberMediaBg', NERA_MEDIA.meadowVideo);
+  initBgVideo('galerieMediaBg', NERA_MEDIA.meadowVideo);
+  initBgVideo('faqMediaBg', NERA_MEDIA.meadowVideo);
+  initBgVideo('ausstattungMediaBg', NERA_MEDIA.curtainVideo);
+  initBgVideo('lageMediaBg', NERA_MEDIA.curtainVideo);
 
   // ---------- Scroll-Fortschrittsbalken ----------
   var progressBar = document.getElementById('scrollProgress');
@@ -1605,6 +1630,13 @@
       if (rect.bottom < -100 || rect.top > vh + 100) return;
       var progress = (rect.top + rect.height/2 - vh/2) / vh;
       t.el.style.transform = 'translateY(' + (progress * t.speed * -300).toFixed(1) + 'px)';
+    });
+    // Hintergrund-Videos driften gegenläufig zum Scroll (Tiefenwirkung)
+    mediaParallax.forEach(function(c){
+      var rect = c.parentElement.getBoundingClientRect();
+      if (rect.bottom < -80 || rect.top > vh + 80) return;
+      var progress = (rect.top + rect.height/2 - vh/2) / vh;
+      c.style.setProperty('--vpy', (progress * 26).toFixed(1) + 'px');
     });
     // Galerie: Bilder wandern sanft in ihren Kacheln (Ken-Burns beim Scrollen)
     galleryImgs.forEach(function(img){
@@ -1672,21 +1704,30 @@
   })();
 </script>
 
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+  }
+}
+</script>
 <script type="module">
-  // Dezentes 3D-Hintergrundszene im Hero (Three.js) — rein dekorativ, bricht ohne WebGL/reduced-motion sauber ab
+  // 3D-Hero: Hausmodell (Higgsfield-generiert) + warme Lichtpartikel (Three.js)
+  // Rein dekorativ — bricht ohne WebGL, ohne CDN oder bei reduced-motion sauber ab.
   (async function initHeroScene(){
     var canvas = document.getElementById('heroCanvas');
     var heroSection = document.getElementById('top');
     if (!canvas || !heroSection) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.innerWidth < 760) return; // Mobil: Verlauf + Coin genügen, Perf/Akku schonen
+    if (window.innerWidth < 760) return; // Mobil: Verlauf + Video genügen, Perf/Akku schonen
     if (!window.WebGLRenderingContext) return;
 
     var THREE;
     try {
-      THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js');
+      THREE = await import('three');
     } catch (err) {
-      return; // CDN nicht erreichbar o.ä. — Verlaufshintergrund bleibt als Fallback
+      return; // CDN/Importmap nicht verfügbar — Verlaufshintergrund bleibt als Fallback
     }
 
     var renderer;
@@ -1696,44 +1737,75 @@
       return;
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.set(0, 0, 13);
 
-    var brass = new THREE.Color('#EAD196');
-    var brassDeep = new THREE.Color('#C89035');
-    var pineMist = new THREE.Color('#3E6B57');
-    var palette = [brass, brassDeep, pineMist];
+    scene.add(new THREE.HemisphereLight(0xfff4dc, 0x1c3a2e, 1.1));
+    var key = new THREE.DirectionalLight(0xffe9bf, 1.6);
+    key.position.set(-4, 6, 8);
+    scene.add(key);
 
-    var shapes = [];
-    var count = 7;
-    for (var i = 0; i < count; i++){
-      var radius = 0.7 + Math.random() * 0.9;
-      var geo = new THREE.IcosahedronGeometry(radius, 0);
-      var edges = new THREE.EdgesGeometry(geo);
-      var mat = new THREE.LineBasicMaterial({
-        color: palette[i % palette.length],
-        transparent: true,
-        opacity: 0.38 + Math.random() * 0.18
-      });
-      var mesh = new THREE.LineSegments(edges, mat);
-      mesh.position.set(
-        (Math.random() * 0.6 + 0.15) * 11,
-        (Math.random() - 0.5) * 7,
-        (Math.random() - 0.5) * 6
-      );
-      mesh.userData.rotSpeed = new THREE.Vector3(
-        (Math.random() - 0.5) * 0.15,
-        (Math.random() - 0.5) * 0.15,
-        (Math.random() - 0.5) * 0.1
-      );
-      mesh.userData.bobAmp = 0.25 + Math.random() * 0.35;
-      mesh.userData.bobSpeed = 0.3 + Math.random() * 0.4;
-      mesh.userData.bobPhase = Math.random() * Math.PI * 2;
-      mesh.userData.baseY = mesh.position.y;
-      scene.add(mesh);
-      shapes.push(mesh);
+    // ---- Warme Lichtpartikel (Glühwürmchen) — laufen immer, auch ohne 3D-Modell ----
+    var FIREFLIES = 46;
+    var flyGeo = new THREE.BufferGeometry();
+    var flyPos = new Float32Array(FIREFLIES * 3);
+    var flyMeta = [];
+    var palette = [new THREE.Color('#EAD196'), new THREE.Color('#C89035'), new THREE.Color('#FFF3D6')];
+    var flyCol = new Float32Array(FIREFLIES * 3);
+    for (var i = 0; i < FIREFLIES; i++){
+      var bx = (Math.random() - 0.35) * 19;
+      var by = (Math.random() - 0.5) * 10;
+      var bz = (Math.random() - 0.6) * 6;
+      flyPos[i*3] = bx; flyPos[i*3+1] = by; flyPos[i*3+2] = bz;
+      var c = palette[i % palette.length];
+      flyCol[i*3] = c.r; flyCol[i*3+1] = c.g; flyCol[i*3+2] = c.b;
+      flyMeta.push({ bx: bx, by: by, bz: bz,
+        amp: 0.3 + Math.random() * 0.55,
+        speed: 0.18 + Math.random() * 0.35,
+        phase: Math.random() * Math.PI * 2 });
+    }
+    flyGeo.setAttribute('position', new THREE.BufferAttribute(flyPos, 3));
+    flyGeo.setAttribute('color', new THREE.BufferAttribute(flyCol, 3));
+    var flyMat = new THREE.PointsMaterial({
+      size: 0.16, sizeAttenuation: true, vertexColors: true,
+      transparent: true, opacity: 0.75,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    });
+    var flies = new THREE.Points(flyGeo, flyMat);
+    scene.add(flies);
+
+    // ---- 3D-Hausmodell (optional, lazy) — bei Ladefehler bleiben die Partikel allein ----
+    var houseGroup = null;
+    var houseUrl = (typeof NERA_MEDIA !== 'undefined' && NERA_MEDIA.houseModel) ? NERA_MEDIA.houseModel : '';
+    if (houseUrl){
+      (async function(){
+        try {
+          var mod = await import('three/addons/loaders/GLTFLoader.js');
+          var loader = new mod.GLTFLoader();
+          loader.load(houseUrl, function(gltf){
+            var obj = gltf.scene;
+            obj.traverse(function(child){
+              if (child.isMesh && child.material){ child.material.toneMapped = true; }
+            });
+            var box = new THREE.Box3().setFromObject(obj);
+            var size = new THREE.Vector3(); box.getSize(size);
+            var center = new THREE.Vector3(); box.getCenter(center);
+            var scale = 4.6 / Math.max(size.x, size.y, size.z, 0.001);
+            obj.position.sub(center); // um den Ursprung zentrieren
+            houseGroup = new THREE.Group();
+            houseGroup.add(obj);
+            houseGroup.scale.setScalar(scale);
+            houseGroup.position.set(5.4, -1.7, -2.2);
+            houseGroup.rotation.x = 0.12;
+            scene.add(houseGroup);
+          }, undefined, function(){ /* Ladefehler → nur Partikel */ });
+        } catch (err) { /* Loader-CDN nicht erreichbar → nur Partikel */ }
+      })();
     }
 
     var mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
@@ -1766,7 +1838,6 @@
     function animate(){
       requestAnimationFrame(animate);
       if (!running) return;
-      var dt = Math.min(clock.getDelta(), 0.1);
       var t = clock.getElapsedTime();
 
       mouseX += (targetX - mouseX) * 0.04;
@@ -1775,12 +1846,22 @@
       camera.position.y = -mouseY * 0.5;
       camera.lookAt(0, 0, 0);
 
-      shapes.forEach(function(mesh){
-        mesh.rotation.x += mesh.userData.rotSpeed.x * dt;
-        mesh.rotation.y += mesh.userData.rotSpeed.y * dt;
-        mesh.rotation.z += mesh.userData.rotSpeed.z * dt;
-        mesh.position.y = mesh.userData.baseY + Math.sin(t * mesh.userData.bobSpeed + mesh.userData.bobPhase) * mesh.userData.bobAmp;
-      });
+      // Partikel driften + funkeln
+      var pos = flyGeo.attributes.position;
+      for (var i = 0; i < FIREFLIES; i++){
+        var m = flyMeta[i];
+        pos.array[i*3]   = m.bx + Math.sin(t * m.speed + m.phase) * m.amp;
+        pos.array[i*3+1] = m.by + Math.sin(t * m.speed * 1.3 + m.phase * 2) * m.amp * 0.8;
+        pos.array[i*3+2] = m.bz + Math.cos(t * m.speed * 0.7 + m.phase) * m.amp * 0.5;
+      }
+      pos.needsUpdate = true;
+      flyMat.opacity = 0.6 + Math.sin(t * 1.7) * 0.18;
+
+      // Haus: langsame Eigenrotation + Scroll dreht mit + sanftes Schweben
+      if (houseGroup){
+        houseGroup.rotation.y = t * 0.14 + window.scrollY * 0.0012 + mouseX * 0.18;
+        houseGroup.position.y = -1.7 + Math.sin(t * 0.5) * 0.16;
+      }
 
       renderer.render(scene, camera);
     }
