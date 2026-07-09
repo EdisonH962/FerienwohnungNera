@@ -428,6 +428,56 @@
     text-shadow:0 0 22px rgba(234,209,150,0.25);
   }
   .rating-src{margin-top:26px;font-size:0.76rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--cream-faint);}
+  .gstars{
+    margin-top:18px;font-size:1.5rem;letter-spacing:0.3em;
+    color:var(--gold-bright);
+    text-shadow:0 0 18px var(--gold-glow), 0 0 50px rgba(200,144,53,0.35);
+    min-height:1em;
+  }
+  .gstars .off{color:rgba(244,239,228,0.22);text-shadow:none;}
+  .review-cta{
+    margin-top:44px;
+    display:flex;align-items:center;justify-content:center;gap:clamp(20px, 3vw, 40px);flex-wrap:wrap;
+  }
+  .reviews-grid{
+    display:grid;grid-template-columns:repeat(auto-fit, minmax(290px, 1fr));gap:18px;
+    max-width:1060px;margin:64px auto 0;
+  }
+  .review-card{
+    border:1px solid var(--line-faint);border-radius:5px;
+    background:linear-gradient(160deg, rgba(18,41,31,0.55), rgba(6,13,10,0.82));
+    backdrop-filter:blur(6px);
+    padding:26px 24px;text-align:left;
+    animation:cardIn 0.8s cubic-bezier(0.22,1,0.36,1) both;
+    transition:border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+  }
+  .review-card:hover{border-color:var(--line-gold);box-shadow:0 0 30px rgba(200,144,53,0.18);transform:translateY(-4px);}
+  .review-card:nth-child(2){animation-delay:0.12s;} .review-card:nth-child(3){animation-delay:0.24s;}
+  .review-card:nth-child(4){animation-delay:0.36s;} .review-card:nth-child(5){animation-delay:0.48s;}
+  @keyframes cardIn{from{opacity:0;transform:translateY(34px);}to{opacity:1;transform:translateY(0);}}
+  .review-card__head{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+  .review-card__avatar{
+    width:46px;height:46px;border-radius:50%;object-fit:cover;flex:none;
+    border:1px solid var(--line-gold);
+    background:var(--pine);
+  }
+  .review-card__avatar--initial{
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-size:1.2rem;color:var(--gold-bright);
+  }
+  .review-card__name{font-weight:700;font-size:0.95rem;color:var(--cream);text-decoration:none;}
+  a.review-card__name:hover{color:var(--gold-bright);}
+  .review-card__date{font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream-faint);margin-top:2px;}
+  .review-card__stars{font-size:0.95rem;letter-spacing:0.18em;color:var(--gold-bright);text-shadow:0 0 10px var(--gold-glow);margin-bottom:10px;}
+  .review-card__stars .off{color:rgba(244,239,228,0.22);text-shadow:none;}
+  .review-card__text{
+    margin:0;font-size:0.92rem;color:var(--cream-dim);
+    display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .reviews-note{
+    text-align:center;margin:26px 0 0;
+    font-size:0.7rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--cream-faint);
+  }
 
   /* ---------- anfrage ---------- */
   .booking-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(40px, 6vw, 90px);align-items:start;}
@@ -717,51 +767,51 @@
   </div>
   <div class="gallery-strip" id="galleryStrip" aria-label="Bildergalerie – horizontal scrollbar">
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Wohnzimmer vergrößern">
-      <img src="assets/img/wohnzimmer.jpg" alt="Helles Wohnzimmer mit großer Eckcouch" loading="lazy">
+      <picture><source srcset="assets/img/wohnzimmer.webp" type="image/webp"><img src="assets/img/wohnzimmer.jpg" alt="Helles Wohnzimmer mit großer Eckcouch" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Wohnzimmer</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Terrasse am Abend vergrößern">
-      <img src="assets/img/terrasse.jpg" alt="Terrasse mit Gartenmöbeln am Abend" loading="lazy">
+      <picture><source srcset="assets/img/terrasse.webp" type="image/webp"><img src="assets/img/terrasse.jpg" alt="Terrasse mit Gartenmöbeln am Abend" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Terrasse am Abend</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Küche vergrößern">
-      <img src="assets/img/kueche.jpg" alt="Moderne voll ausgestattete Küche" loading="lazy">
+      <picture><source srcset="assets/img/kueche.webp" type="image/webp"><img src="assets/img/kueche.jpg" alt="Moderne voll ausgestattete Küche" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Küche</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Schlafzimmer vergrößern">
-      <img src="assets/img/schlafzimmer.jpg" alt="Schlafzimmer mit Doppelbett" loading="lazy">
+      <picture><source srcset="assets/img/schlafzimmer.webp" type="image/webp"><img src="assets/img/schlafzimmer.jpg" alt="Schlafzimmer mit Doppelbett" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Schlafzimmer</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Zimmer mit zwei Einzelbetten vergrößern">
-      <img src="assets/img/einzelbetten.jpg" alt="Zimmer mit zwei Einzelbetten" loading="lazy">
+      <picture><source srcset="assets/img/einzelbetten.webp" type="image/webp"><img src="assets/img/einzelbetten.jpg" alt="Zimmer mit zwei Einzelbetten" loading="lazy" width="1200" height="900"></picture>
       <figcaption>2 Einzelbetten</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Essbereich vergrößern">
-      <img src="assets/img/essbereich.jpg" alt="Essbereich mit großem Esstisch" loading="lazy">
+      <picture><source srcset="assets/img/essbereich.webp" type="image/webp"><img src="assets/img/essbereich.jpg" alt="Essbereich mit großem Esstisch" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Essbereich</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Bad vergrößern">
-      <img src="assets/img/bad.jpg" alt="Modernes Bad mit Glasdusche" loading="lazy">
+      <picture><source srcset="assets/img/bad.webp" type="image/webp"><img src="assets/img/bad.jpg" alt="Modernes Bad mit Glasdusche" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Bad</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Garten vergrößern">
-      <img src="assets/img/garten.jpg" alt="500 Quadratmeter Garten mit Rasenfläche" loading="lazy">
+      <picture><source srcset="assets/img/garten.webp" type="image/webp"><img src="assets/img/garten.jpg" alt="500 Quadratmeter Garten mit Rasenfläche" loading="lazy" width="1200" height="900"></picture>
       <figcaption>500 m² Garten</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Haus und Stellplatz vergrößern">
-      <img src="assets/img/haus.jpg" alt="Hausansicht mit Stellplatz" loading="lazy">
+      <picture><source srcset="assets/img/haus.webp" type="image/webp"><img src="assets/img/haus.jpg" alt="Hausansicht mit Stellplatz" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Haus &amp; Stellplatz</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Wohnzimmer Detail vergrößern">
-      <img src="assets/img/wohnzimmer2.jpg" alt="Wohnzimmer aus anderer Perspektive" loading="lazy">
+      <picture><source srcset="assets/img/wohnzimmer2.webp" type="image/webp"><img src="assets/img/wohnzimmer2.jpg" alt="Wohnzimmer aus anderer Perspektive" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Wohnbereich</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Schlafzimmer Detail vergrößern">
-      <img src="assets/img/schlafzimmer2.jpg" alt="Schlafzimmer Detailansicht" loading="lazy">
+      <picture><source srcset="assets/img/schlafzimmer2.webp" type="image/webp"><img src="assets/img/schlafzimmer2.jpg" alt="Schlafzimmer Detailansicht" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Schlafbereich</figcaption>
     </figure>
     <figure class="gallery-card" tabindex="0" role="button" aria-label="Garten am Abend vergrößern">
-      <img src="assets/img/garten2.jpg" alt="Garten mit Terrasse am Abend" loading="lazy">
+      <picture><source srcset="assets/img/garten2.webp" type="image/webp"><img src="assets/img/garten2.jpg" alt="Garten mit Terrasse am Abend" loading="lazy" width="1200" height="900"></picture>
       <figcaption>Garten am Abend</figcaption>
     </figure>
   </div>
@@ -847,13 +897,20 @@
   <div class="wrap">
     <div class="rating-hero">
       <p class="kicker reveal" style="justify-content:center;">Bewertungen</p>
-      <div class="score reveal d1" aria-label="Bewertung 9,4 von 10">9,4<small> / 10</small></div>
+      <div class="score reveal d1" id="gScore" aria-label="Bewertung 9,4 von 10">9,4<small> / 10</small></div>
+      <div class="gstars reveal d1" id="gStars" aria-hidden="true"></div>
       <p class="rating-quote reveal d2">„Gäste kommen an –<br>und kommen wieder."</p>
-      <p class="rating-src reveal d3">Durchschnittliche Gästebewertung · Booking.com</p>
-      <div class="reveal d3" style="margin-top:44px;">
-        <a class="btn-line" href="https://www.booking.com/Share-txAgwc" target="_blank" rel="noopener">Bewertungen auf Booking.com <span class="arr">→</span></a>
+      <p class="rating-src reveal d3" id="gCount">Durchschnittliche Gästebewertung · Booking.com</p>
+      <div class="review-cta reveal d3">
+        <a class="btn-solid" id="gWriteBtn" href="https://search.google.com/local/writereview?placeid=ChIJ-ZNe_q4lvUcRK845esyisCM" target="_blank" rel="noopener">Jetzt Bewertung schreiben</a>
+        <a class="btn-line" id="gAllBtn" href="https://search.google.com/local/reviews?placeid=ChIJ-ZNe_q4lvUcRK845esyisCM" target="_blank" rel="noopener">Alle Google-Bewertungen ansehen <span class="arr">→</span></a>
+      </div>
+      <div class="reveal d3" style="margin-top:26px;">
+        <a class="btn-line" href="https://www.booking.com/Share-txAgwc" target="_blank" rel="noopener" style="font-size:0.72rem;">Bewertungen auf Booking.com <span class="arr">→</span></a>
       </div>
     </div>
+    <div class="reviews-grid" id="gReviews" aria-live="polite"></div>
+    <p class="reviews-note" id="gNote" hidden>Bewertungen werden automatisch live von Google geladen.</p>
   </div>
 </section>
 
@@ -960,7 +1017,7 @@
       <h3>4. Kontaktaufnahme und Buchungsanfrage</h3>
       <p>Diese Website bietet ein Anfrageformular für Buchungsanfragen. Beim Absenden öffnet sich Ihr eigenes E-Mail-Programm mit einer vorbereiteten Nachricht; eine Speicherung Ihrer Formulardaten auf unserem Server findet nicht statt. Die von Ihnen per E-Mail oder WhatsApp übermittelten Daten verarbeiten wir ausschließlich zur Bearbeitung Ihrer Anfrage (Art. 6 Abs. 1 lit. b DSGVO).</p>
       <h3>5. Externe Dienste</h3>
-      <p>Eingebettete Karten werden erst nach Ihrem Klick von OpenStreetMap (OpenStreetMap Foundation) geladen; dabei wird Ihre IP-Adresse an deren Server übermittelt. Hintergrundvideos werden von einem Content-Delivery-Netzwerk geladen. Schriftarten werden über Google Fonts bezogen; dabei wird Ihre IP-Adresse an Google übermittelt. Links zu Airbnb, Booking.com und WhatsApp führen zu externen Anbietern mit eigenen Datenschutzbestimmungen.</p>
+      <p>Eingebettete Karten werden erst nach Ihrem Klick von OpenStreetMap (OpenStreetMap Foundation) geladen; dabei wird Ihre IP-Adresse an deren Server übermittelt. Hintergrundvideos werden von einem Content-Delivery-Netzwerk geladen. Schriftarten werden über Google Fonts bezogen; dabei wird Ihre IP-Adresse an Google übermittelt. Zur Anzeige aktueller Gästebewertungen und Fotos ruft diese Website Daten unseres Google-Unternehmensprofils über die Google Places API (Google Ireland Ltd.) ab; dabei wird Ihre IP-Adresse an Google übermittelt (Art. 6 Abs. 1 lit. f DSGVO – Information über die Qualität unserer Unterkunft). Links zu Airbnb, Booking.com, Google und WhatsApp führen zu externen Anbietern mit eigenen Datenschutzbestimmungen.</p>
     </div>
   </details>
 </div>
@@ -1172,17 +1229,21 @@
   });
 
   var suppressClick = false;
-  var lbTiles = Array.prototype.slice.call(document.querySelectorAll('.gallery-card'));
   var lb = document.getElementById('lightbox');
   var lbImg = document.getElementById('lbImg');
   var lbCaption = document.getElementById('lbCaption');
   var lbIndex = 0;
+  function getTiles(){
+    return Array.prototype.slice.call(document.querySelectorAll('.gallery-card'));
+  }
   function lbOpen(i){
-    lbIndex = (i + lbTiles.length) % lbTiles.length;
-    var img = lbTiles[lbIndex].querySelector('img');
-    lbImg.src = img.src;
+    var tiles = getTiles();
+    if (!tiles.length) return;
+    lbIndex = (i + tiles.length) % tiles.length;
+    var img = tiles[lbIndex].querySelector('img');
+    lbImg.src = img.currentSrc || img.src;
     lbImg.alt = img.alt;
-    lbCaption.textContent = lbTiles[lbIndex].querySelector('figcaption').textContent + ' · ' + (lbIndex + 1) + ' / ' + lbTiles.length;
+    lbCaption.textContent = tiles[lbIndex].querySelector('figcaption').textContent + ' · ' + (lbIndex + 1) + ' / ' + tiles.length;
     lb.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
@@ -1190,11 +1251,16 @@
     lb.classList.remove('is-open');
     document.body.style.overflow = '';
   }
-  lbTiles.forEach(function(tile, i){
-    tile.addEventListener('click', function(){ if (!suppressClick) lbOpen(i); });
-    tile.addEventListener('keydown', function(e){
-      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); lbOpen(i); }
-    });
+  // Delegation: funktioniert auch für später (z. B. von Google) ergänzte Karten
+  strip.addEventListener('click', function(e){
+    var tile = e.target.closest('.gallery-card');
+    if (!tile || suppressClick) return;
+    lbOpen(getTiles().indexOf(tile));
+  });
+  strip.addEventListener('keydown', function(e){
+    var tile = e.target.closest('.gallery-card');
+    if (!tile) return;
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); lbOpen(getTiles().indexOf(tile)); }
   });
   document.getElementById('lbClose').addEventListener('click', lbCloseFn);
   document.getElementById('lbPrev').addEventListener('click', function(e){ e.stopPropagation(); lbOpen(lbIndex - 1); });
@@ -1263,6 +1329,107 @@
     window.addEventListener('scroll', updateSticky, {passive:true});
     updateSticky();
   }
+
+  // ---------- Google-Unternehmensprofil: Live-Bewertungen & Fotos ----------
+  // Places API (New) — funktioniert direkt aus dem Browser einer statischen Seite.
+  // API-Key in der Google Cloud Console anlegen (Places API (New) aktivieren) und
+  // per HTTP-Referrer auf die eigene Domain beschränken.
+  var GOOGLE_PLACES = {
+    apiKey: 'GOOGLE_API_KEY_HIER_EINFÜGEN',
+    placeId: 'ChIJ-ZNe_q4lvUcRK845esyisCM',
+    maxPhotos: 10,          /* wie viele Profil-Fotos in die Galerie übernommen werden */
+    cacheMinutes: 60        /* Browser-Cache, schont das API-Kontingent */
+  };
+
+  (function initGooglePlaces(){
+    var key = GOOGLE_PLACES.apiKey;
+    if (!key || key.indexOf('HIER_EINF') !== -1) return; // noch kein Key: statische Anzeige bleibt
+
+    function render(place){
+      // Durchschnitt + Anzahl
+      if (typeof place.rating === 'number'){
+        var score = document.getElementById('gScore');
+        var scoreTxt = place.rating.toFixed(1).replace('.', ',');
+        score.innerHTML = scoreTxt + '<small> / 5</small>';
+        score.setAttribute('aria-label', 'Google-Bewertung ' + scoreTxt + ' von 5');
+        var stars = document.getElementById('gStars');
+        var full = Math.round(place.rating);
+        var s = '';
+        for (var i = 1; i <= 5; i++){ s += '<span' + (i > full ? ' class="off"' : '') + '>★</span>'; }
+        stars.innerHTML = s;
+      }
+      if (place.userRatingCount){
+        document.getElementById('gCount').textContent = place.userRatingCount + ' Google-Bewertungen · automatisch aktualisiert';
+      }
+      document.getElementById('gNote').hidden = false;
+
+      // Neueste Rezensionen
+      var grid = document.getElementById('gReviews');
+      (place.reviews || []).slice(0, 5).forEach(function(r){
+        var name = (r.authorAttribution && r.authorAttribution.displayName) || 'Google-Nutzer';
+        var uri = r.authorAttribution && r.authorAttribution.uri;
+        var photo = r.authorAttribution && r.authorAttribution.photoUri;
+        var stars = '';
+        for (var i = 1; i <= 5; i++){ stars += '<span' + (i > r.rating ? ' class="off"' : '') + '>★</span>'; }
+        var card = document.createElement('article');
+        card.className = 'review-card';
+        var avatar = photo
+          ? '<img class="review-card__avatar" src="' + photo + '" alt="" loading="lazy" referrerpolicy="no-referrer">'
+          : '<div class="review-card__avatar review-card__avatar--initial" aria-hidden="true">' + name.charAt(0).toUpperCase() + '</div>';
+        var nameHtml = uri
+          ? '<a class="review-card__name" href="' + uri + '" target="_blank" rel="noopener">' + name + '</a>'
+          : '<span class="review-card__name">' + name + '</span>';
+        card.innerHTML =
+          '<div class="review-card__head">' + avatar +
+            '<div>' + nameHtml +
+              '<div class="review-card__date">' + (r.relativePublishTimeDescription || '') + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="review-card__stars" aria-label="' + r.rating + ' von 5 Sternen">' + stars + '</div>' +
+          '<p class="review-card__text"></p>';
+        card.querySelector('.review-card__text').textContent = (r.text && r.text.text) || '';
+        grid.appendChild(card);
+      });
+
+      // Die besten Profil-Fotos automatisch in die Galerie übernehmen
+      (place.photos || []).slice(0, GOOGLE_PLACES.maxPhotos).forEach(function(ph, i){
+        var url = 'https://places.googleapis.com/v1/' + ph.name + '/media?maxHeightPx=1100&key=' + key;
+        var fig = document.createElement('figure');
+        fig.className = 'gallery-card';
+        fig.setAttribute('tabindex', '0');
+        fig.setAttribute('role', 'button');
+        fig.setAttribute('aria-label', 'Gästefoto ' + (i + 1) + ' vergrößern');
+        var img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Ferienwohnung NERA Gelnhausen-Meerholz – Impression ' + (i + 1) + ' aus dem Google-Unternehmensprofil';
+        img.loading = 'lazy';
+        img.addEventListener('error', function(){ if (fig.parentNode) fig.parentNode.removeChild(fig); });
+        var cap = document.createElement('figcaption');
+        cap.textContent = 'Impression';
+        fig.appendChild(img); fig.appendChild(cap);
+        strip.appendChild(fig);
+      });
+    }
+
+    function load(){
+      try {
+        var cached = sessionStorage.getItem('neraGPlace');
+        if (cached){
+          var c = JSON.parse(cached);
+          if (Date.now() - c.ts < GOOGLE_PLACES.cacheMinutes * 60000){ render(c.data); return; }
+        }
+      } catch (err) { /* Cache defekt → frisch laden */ }
+      fetch('https://places.googleapis.com/v1/places/' + GOOGLE_PLACES.placeId +
+            '?languageCode=de&fields=rating,userRatingCount,reviews,photos&key=' + key)
+        .then(function(res){ if (!res.ok) throw new Error(res.status); return res.json(); })
+        .then(function(data){
+          try { sessionStorage.setItem('neraGPlace', JSON.stringify({ts: Date.now(), data: data})); } catch (err) {}
+          render(data);
+        })
+        .catch(function(){ /* API nicht erreichbar → statische Anzeige bleibt */ });
+    }
+    load();
+  })();
 
   // ---------- Goldstaub-Partikel (gesamte Seite) ----------
   (function initDust(){
