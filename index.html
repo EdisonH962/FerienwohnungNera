@@ -340,21 +340,28 @@
   .gallery-hint::after{content:"⟶";color:var(--gold);font-size:1.1rem;animation:hintX 2s ease-in-out infinite;}
   @keyframes hintX{0%,100%{transform:translateX(0);}50%{transform:translateX(8px);}}
 
-  /* ---------- volle bildflächen (emotional breaks) ---------- */
+  /* ---------- emotionale zwischen-momente (reine licht-flächen, keine bilder) ---------- */
   .image-break{
     position:relative;overflow:hidden;
-    height:clamp(420px, 78vh, 780px);
+    height:clamp(380px, 64vh, 660px);
+    background:
+      radial-gradient(70% 110% at 50% 118%, rgba(200,144,53,0.20) 0%, rgba(200,144,53,0.06) 38%, transparent 62%),
+      radial-gradient(120% 100% at 50% 40%, var(--pine) 0%, var(--bg-2) 52%, var(--bg) 100%);
   }
-  .image-break img{
-    position:absolute;inset:-12% 0;
-    width:100%;height:124%;object-fit:cover;
-    transform:translateY(var(--ipy, 0px)) scale(1.05);
-    filter:saturate(0.9) brightness(0.82);
+  .image-break::before{
+    content:"";position:absolute;left:50%;top:50%;
+    width:min(560px, 74vw);height:min(560px, 74vw);
+    transform:translate(-50%,-50%) translateY(var(--ipy, 0px));
+    border-radius:50%;
+    border:1px solid rgba(200,144,53,0.22);
+    box-shadow:0 0 70px rgba(200,144,53,0.14), inset 0 0 90px rgba(200,144,53,0.1);
     will-change:transform;
   }
   .image-break::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, var(--bg) 0%, transparent 18%, transparent 78%, var(--bg) 100%);
+    content:"";position:absolute;left:50%;bottom:0;
+    width:min(720px, 90vw);height:1px;transform:translateX(-50%);
+    background:linear-gradient(90deg, transparent, rgba(200,144,53,0.55), transparent);
+    box-shadow:0 0 18px rgba(200,144,53,0.4);
   }
   .image-break__caption{
     position:absolute;z-index:2;inset:0;
@@ -689,11 +696,12 @@
   </div>
 </section>
 
-<!-- ============ EMOTIONALE BILDFLÄCHE 1 ============ -->
-<div class="image-break" data-parallax-img>
-  <img src="assets/img/terrasse.jpg" alt="Terrasse der Ferienwohnung NERA am Abend mit warmem Licht" loading="lazy">
+<!-- ============ EMOTIONALER MOMENT 1 ============ -->
+<div class="image-break">
+  <div class="glow-orb" style="width:340px;height:340px;top:12%;left:8%;animation-delay:-6s;"></div>
+  <div class="glow-orb" style="width:280px;height:280px;bottom:6%;right:10%;animation-delay:-12s;"></div>
   <div class="image-break__caption">
-    <h2 class="display reveal">Abende, die bleiben.</h2>
+    <h2 class="display reveal">Abende, <em>die bleiben.</em></h2>
   </div>
 </div>
 
@@ -791,11 +799,12 @@
   </div>
 </section>
 
-<!-- ============ EMOTIONALE BILDFLÄCHE 2 ============ -->
-<div class="image-break" data-parallax-img>
-  <img src="assets/img/garten2.jpg" alt="Garten der Ferienwohnung NERA in der Abenddämmerung" loading="lazy">
+<!-- ============ EMOTIONALER MOMENT 2 ============ -->
+<div class="image-break">
+  <div class="glow-orb" style="width:360px;height:360px;top:8%;right:6%;animation-delay:-3s;"></div>
+  <div class="glow-orb" style="width:260px;height:260px;bottom:10%;left:12%;animation-delay:-9s;"></div>
   <div class="image-break__caption">
-    <h2 class="display reveal">500 m² Freiheit.</h2>
+    <h2 class="display reveal">500 m² <em>Freiheit.</em></h2>
   </div>
 </div>
 
@@ -1046,7 +1055,7 @@
   // ---------- Scroll-Engine: Progress, Szenen-Zoom, Parallax ----------
   var progressBar = document.getElementById('scrollProgress');
   var sceneBgs = Array.prototype.slice.call(document.querySelectorAll('.scene__bg'));
-  var parallaxImgs = Array.prototype.slice.call(document.querySelectorAll('.image-break img'));
+  var parallaxImgs = Array.prototype.slice.call(document.querySelectorAll('.image-break'));
   var galleryCards = Array.prototype.slice.call(document.querySelectorAll('.gallery-card img'));
   var ticking = false;
 
@@ -1074,12 +1083,12 @@
       bg.style.transform = 'translateY(' + (progress * -46).toFixed(1) + 'px)';
     });
 
-    // Volle Bildflächen: gegenläufige Drift
-    parallaxImgs.forEach(function(img){
-      var rect = img.parentElement.getBoundingClientRect();
+    // Zwischen-Momente: Leucht-Ring driftet gegenläufig zum Scroll
+    parallaxImgs.forEach(function(el){
+      var rect = el.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > vh) return;
       var progress = (rect.top + rect.height / 2 - vh / 2) / vh;
-      img.style.setProperty('--ipy', (progress * 52).toFixed(1) + 'px');
+      el.style.setProperty('--ipy', (progress * 44).toFixed(1) + 'px');
     });
 
     // Galerie-Karten: leichte vertikale Staffelung beim Scrollen
