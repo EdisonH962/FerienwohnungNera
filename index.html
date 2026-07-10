@@ -179,6 +179,14 @@
     will-change:transform;
   }
   .scene__bg.is-playing video{opacity:var(--scene-video-opacity, 0.5);}
+  /* Mobil: Videos deutlich ruhiger — kein Zusatz-Zoom, halbe Deckkraft, dunklerer Schleier */
+  @media (max-width: 760px){
+    .scene__bg video{transform:translate(-50%,-50%) scale(1.0);}
+    .scene__bg.is-playing video{opacity:calc(var(--scene-video-opacity, 0.5) * 0.5);}
+    .scene__bg::after{
+      background:linear-gradient(180deg, rgba(6,13,10,0.94) 0%, rgba(6,13,10,0.62) 28%, rgba(6,13,10,0.62) 70%, rgba(6,13,10,0.96) 100%);
+    }
+  }
   .scene__bg::after{
     content:"";position:absolute;inset:0;
     background:
@@ -1089,6 +1097,7 @@
       v.addEventListener('canplay', function(){
         var p = v.play();
         if (p && p.catch) p.catch(function(){ if (v.parentNode) v.parentNode.removeChild(v); });
+        if (window.innerWidth < 760) v.playbackRate = 0.7; // mobil: ruhigere Bewegung
         bgEl.classList.add('is-playing');
       });
       v.addEventListener('error', function(){
@@ -1130,15 +1139,17 @@
 
     if (prefersReduced) return;
 
-    // Szenen: Hintergrund zoomt sanft heraus und driftet, während die Szene durchs Bild läuft
-    sceneBgs.forEach(function(bg){
-      var rect = bg.parentElement.getBoundingClientRect();
-      if (rect.bottom < -120 || rect.top > vh + 120) return;
-      var progress = (rect.top + rect.height / 2 - vh / 2) / (vh + rect.height); // ~ -0.5 .. 0.5
-      var scale = 1.16 - Math.min(Math.abs(progress) * 0.12, 0.06);
-      bg.style.setProperty('--vscale', scale.toFixed(4));
-      bg.style.transform = 'translateY(' + (progress * -46).toFixed(1) + 'px)';
-    });
+    // Szenen: Hintergrund zoomt sanft heraus und driftet — mobil deaktiviert (ruhiges Bild)
+    if (window.innerWidth >= 760){
+      sceneBgs.forEach(function(bg){
+        var rect = bg.parentElement.getBoundingClientRect();
+        if (rect.bottom < -120 || rect.top > vh + 120) return;
+        var progress = (rect.top + rect.height / 2 - vh / 2) / (vh + rect.height); // ~ -0.5 .. 0.5
+        var scale = 1.16 - Math.min(Math.abs(progress) * 0.12, 0.06);
+        bg.style.setProperty('--vscale', scale.toFixed(4));
+        bg.style.transform = 'translateY(' + (progress * -46).toFixed(1) + 'px)';
+      });
+    }
 
     // Zwischen-Momente: Leucht-Ring driftet gegenläufig zum Scroll
     parallaxImgs.forEach(function(el){
