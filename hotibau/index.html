@@ -720,6 +720,14 @@
     text-align:center;margin:26px 0 0;
     font-size:0.7rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--cream-faint);
   }
+  .consent-shield{
+    max-width:640px;margin:56px auto 0;
+    border:1px solid var(--line-faint);border-radius:5px;
+    background:linear-gradient(160deg, rgba(26,46,22,0.55), rgba(11,13,10,0.82));
+    padding:34px;text-align:center;
+  }
+  .consent-shield p{margin:0 0 20px;font-size:0.88rem;color:var(--cream-faint);}
+  .consent-shield .btn-solid{cursor:pointer;}
 
   /* ---------- faq ---------- */
   .faq-wrap{max-width:860px;margin:56px auto 0;}
@@ -1337,31 +1345,11 @@
         <a class="btn-line" href="https://search.google.com/local/writereview?placeid=ChIJl8ZvoW0jvUcRYBnko9yyMqQ" target="_blank" rel="noopener">Jetzt Google-Bewertung schreiben <span class="arr" aria-hidden="true">⟶</span></a>
       </div>
     </div>
-    <div class="reviews-grid" id="gReviews">
-      <article class="review-card">
-        <div class="review-card__head">
-          <div class="review-card__avatar review-card__avatar--initial" aria-hidden="true">M</div>
-          <div><span class="review-card__name">Familie M.</span><div class="review-card__date">Gelnhausen</div></div>
-        </div>
-        <div class="review-card__stars" aria-label="5 von 5 Sternen">★★★★★</div>
-        <p class="review-card__text">„Einfahrt und Gehweg wurden zum vereinbarten Festpreis und Termin fertig. Saubere Arbeit, Baustelle jeden Abend aufgeräumt.“</p>
-      </article>
-      <article class="review-card">
-        <div class="review-card__head">
-          <div class="review-card__avatar review-card__avatar--initial" aria-hidden="true">S</div>
-          <div><span class="review-card__name">Familie S.</span><div class="review-card__date">Erlensee</div></div>
-        </div>
-        <div class="review-card__stars" aria-label="5 von 5 Sternen">★★★★★</div>
-        <p class="review-card__text">„Terrasse mit Sichtschutz – vom ersten Termin bis zur Abnahme alles unkompliziert. Ehrliche Beratung, faire Preise.“</p>
-      </article>
-      <article class="review-card">
-        <div class="review-card__head">
-          <div class="review-card__avatar review-card__avatar--initial" aria-hidden="true">K</div>
-          <div><span class="review-card__name">Familie K.</span><div class="review-card__date">Langenselbold</div></div>
-        </div>
-        <div class="review-card__stars" aria-label="5 von 5 Sternen">★★★★★</div>
-        <p class="review-card__text">„Hangbefestigung mit Natursteinmauer. Herr Hoti hat mitgedacht und uns eine bessere Lösung vorgeschlagen. Ergebnis: top.“</p>
-      </article>
+    <div class="reviews-grid" id="gReviews"></div>
+    <div class="consent-shield reveal" id="gConsent" hidden>
+      <p class="kicker" style="margin:0 0 14px;justify-content:center;">Echte Google-Bewertungen</p>
+      <p>Zum Schutz Ihrer Daten werden Bewertungen und Projektfotos aus unserem Google-Unternehmensprofil erst nach Ihrem Klick geladen. Dabei wird Ihre IP-Adresse an Google übermittelt (Details in der Datenschutzerklärung). Ihre Auswahl merken wir uns für den nächsten Besuch.</p>
+      <button class="btn-solid" id="gConsentBtn" type="button">Google-Bewertungen &amp; Fotos laden</button>
     </div>
   </div>
 </section>
@@ -1525,7 +1513,7 @@
           <h3>5. Google Maps (Click-to-Load)</h3>
           <p>Zur Anfahrtsdarstellung binden wir Kartenmaterial von Google Maps ein – jedoch erst, nachdem Sie aktiv auf „Karte laden“ geklickt haben (Zwei-Klick-Lösung). Erst dann wird eine Verbindung zu den Servern von Google aufgebaut und Ihre IP-Adresse übertragen (Art. 6 Abs. 1 lit. a DSGVO – Einwilligung durch aktives Laden). Ohne Ihren Klick werden keine Daten übertragen.</p>
           <h3>6. Google-Bewertungen (Places API)</h3>
-          <p>Zur Anzeige unserer aktuellen Google-Bewertungen kann diese Website Bewertungsdaten und Fotos über die Google Places API abrufen (Google Ireland Limited). Dabei wird Ihre IP-Adresse an Google übertragen (Art. 6 Abs. 1 lit. f DSGVO – berechtigtes Interesse an der Darstellung authentischer Kundenbewertungen). Es werden dabei keine Cookies gesetzt.</p>
+          <p>Zur Anzeige unserer aktuellen Google-Bewertungen und Projektfotos kann diese Website Daten über die Google Places API abrufen (Google Ireland Limited) – jedoch erst, nachdem Sie aktiv auf „Google-Bewertungen &amp; Fotos laden" geklickt haben (Zwei-Klick-Lösung, Art. 6 Abs. 1 lit. a DSGVO – Einwilligung). Erst dann wird Ihre IP-Adresse an Google übertragen. Ihre Einwilligung speichern wir ausschließlich lokal in Ihrem Browser (localStorage), damit die Inhalte bei künftigen Besuchen automatisch geladen werden; Sie können sie jederzeit durch Löschen Ihrer Browserdaten widerrufen. Es werden dabei keine Cookies gesetzt.</p>
           <h3>7. Kontaktaufnahme per Formular, E-Mail, Telefon oder WhatsApp</h3>
           <p>Unser Anfrage-Formular überträgt keine Daten an einen Server dieser Website. Beim Klick auf „Anfragen“ öffnet sich Ihr eigenes E-Mail-Programm mit einer vorbereiteten Nachricht an uns – Sie behalten die volle Kontrolle über den Versand. Wenn Sie uns per E-Mail, Telefon oder WhatsApp kontaktieren, verarbeiten wir Ihre Angaben (Name, Kontaktdaten, Anliegen) ausschließlich zur Bearbeitung Ihrer Anfrage und für mögliche Anschlussfragen (Art. 6 Abs. 1 lit. b DSGVO). Bei der Nutzung von WhatsApp gelten ergänzend die Datenschutzhinweise der WhatsApp Ireland Ltd.; dabei können Daten an Server außerhalb der EU übertragen werden.</p>
           <h3>8. Eigene Bild- und Videoinhalte</h3>
@@ -1914,7 +1902,14 @@
 
   (function initGooglePlaces(){
     var key = GOOGLE_PLACES.apiKey;
-    if (!key || key.indexOf('HIER_EINF') !== -1) return; // noch kein Key: statische Anzeige bleibt
+    var shield = document.getElementById('gConsent');
+    if (!key || key.indexOf('HIER_EINF') !== -1) return; // noch kein Key: statische Anzeige bleibt, Shield bleibt versteckt
+
+    // DSGVO: Google-Inhalte erst nach Einwilligung laden (wie bei der Karte);
+    // die Einwilligung wird gemerkt, danach aktualisieren sich die Daten automatisch.
+    function hasConsent(){
+      try { return localStorage.getItem('hotiGoogleConsent') === 'yes'; } catch (err) { return false; }
+    }
 
     function render(place){
       // Gesamtbewertung + Anzahl
@@ -1935,10 +1930,15 @@
       }
       document.getElementById('gNote').hidden = false;
 
-      // Neueste Rezensionen vor den statischen Referenzen einfügen
+      // Aussagekräftigste Rezensionen zuerst: beste Note, dann längster Text
       var grid = document.getElementById('gReviews');
-      var firstStatic = grid.firstElementChild;
-      (place.reviews || []).slice(0, 6).forEach(function(r){
+      grid.innerHTML = '';
+      var sorted = (place.reviews || []).slice().sort(function(a, b){
+        var tA = ((a.text && a.text.text) || '').length;
+        var tB = ((b.text && b.text.text) || '').length;
+        return (b.rating - a.rating) || (tB - tA);
+      });
+      sorted.slice(0, 6).forEach(function(r){
         var name = (r.authorAttribution && r.authorAttribution.displayName) || 'Google-Nutzer';
         var uri = r.authorAttribution && r.authorAttribution.uri;
         var photo = r.authorAttribution && r.authorAttribution.photoUri;
@@ -1962,13 +1962,28 @@
           '<p class="review-card__text"></p>';
         card.querySelector('.review-card__name').textContent = name;
         card.querySelector('.review-card__text').textContent = (r.text && r.text.text) || '';
-        grid.insertBefore(card, firstStatic);
+        grid.appendChild(card);
       });
 
-      // Die besten Profil-Fotos automatisch in die Galerie übernehmen
+      // Die besten Profil-Fotos automatisch in die Galerie übernehmen:
+      // vom Inhaber hochgeladene Fotos zuerst, dann nach Auflösung; zu kleine Fotos überspringen
+      function isOwnerPhoto(ph){
+        var a = (ph.authorAttributions && ph.authorAttributions[0] && ph.authorAttributions[0].displayName) || '';
+        return a.toLowerCase().indexOf('hoti') !== -1 ? 1 : 0;
+      }
+      var photos = (place.photos || []).slice()
+        .filter(function(ph){ return (ph.widthPx || 9999) >= 700; })
+        .sort(function(a, b){
+          return (isOwnerPhoto(b) - isOwnerPhoto(a)) || ((b.widthPx || 0) - (a.widthPx || 0));
+        });
+      if (window.console && place.photos){
+        var low = place.photos.filter(function(ph){ return (ph.widthPx || 9999) < 700; }).length;
+        console.info('[HOTI BAU] Google-Fotos: ' + place.photos.length + ' gesamt, davon ' +
+          photos.filter(isOwnerPhoto).length + ' vom Inhaber, ' + low + ' wegen niedriger Auflösung übersprungen.');
+      }
       var noteShown = false;
-      (place.photos || []).slice(0, GOOGLE_PLACES.maxPhotos).forEach(function(ph, i){
-        var url = 'https://places.googleapis.com/v1/' + ph.name + '/media?maxHeightPx=1100&key=' + key;
+      photos.slice(0, GOOGLE_PLACES.maxPhotos).forEach(function(ph, i){
+        var url = 'https://places.googleapis.com/v1/' + ph.name + '/media?maxHeightPx=1600&key=' + key;
         var fig = document.createElement('figure');
         fig.className = 'gallery-card gallery-card--img';
         fig.setAttribute('tabindex', '0');
@@ -2004,7 +2019,17 @@
         })
         .catch(function(){ /* API nicht erreichbar → statische Anzeige bleibt */ });
     }
-    load();
+
+    if (hasConsent()){
+      load();
+    } else if (shield){
+      shield.hidden = false;
+      document.getElementById('gConsentBtn').addEventListener('click', function(){
+        try { localStorage.setItem('hotiGoogleConsent', 'yes'); } catch (err) {}
+        shield.hidden = true;
+        load();
+      });
+    }
   })();
 
   // ---------- Cursor-Glow (nur Desktop) ----------
