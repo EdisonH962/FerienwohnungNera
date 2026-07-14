@@ -6,11 +6,11 @@
 <title>HOTI BAU · Garten- &amp; Landschaftsbau Main-Kinzig-Kreis — Meisterhaft. Zum Festpreis.</title>
 <meta name="description" content="HOTI BAU – Garten- und Landschaftsbau seit 1996 in Gründau. Pflasterarbeiten, Terrassen, Mauern, Zäune, Baggerarbeiten, Rollrasen, Grünschnitt &amp; Baumfällung zum Festpreis. Jetzt kostenlose Vor-Ort-Besichtigung im Main-Kinzig-Kreis sichern.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.hotigartenbau.de/">
+<link rel="canonical" href="https://hotibau.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="HOTI BAU – Garten- &amp; Landschaftsbau im Main-Kinzig-Kreis">
 <meta property="og:description" content="Ihr Außenbereich. Meisterhaft gebaut. Zum Festpreis. Seit 1996 in Gründau – kostenlose Vor-Ort-Besichtigung sichern.">
-<meta property="og:url" content="https://www.hotigartenbau.de/">
+<meta property="og:url" content="https://hotibau.com/">
 <meta property="og:image" content="https://d2ol7oe51mr4n9.cloudfront.net/user_3G8m1bxNBqhjlyBCY2gFUlzpzbo/c57be04b-d753-459d-b971-077333979d35.png">
 <meta property="og:locale" content="de_DE">
 <meta name="theme-color" content="#0B0D0A">
@@ -28,10 +28,10 @@
   "foundingDate": "1996",
   "telephone": "+49 170 8031284",
   "email": "info@hotigartenbau.de",
-  "url": "https://www.hotigartenbau.de/",
-  "image": "https://www.hotigartenbau.de/assets/hero-poster.jpg",
+  "url": "https://hotibau.com/",
+  "image": "https://hotibau.com/assets/hero-poster.jpg",
   "priceRange": "€€",
-  "hasMap": "https://www.google.com/maps/place/?q=place_id:ChIJl8ZvoW0jvUcRYBnko9yyMqQ",
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=HOTI%20Garten-%20und%20Landschaftsbau%20Gr%C3%BCndau&query_place_id=ChIJl8ZvoW0jvUcRYBnko9yyMqQ",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Wiesenstraße 20B",
@@ -1341,7 +1341,7 @@
       <p class="rating-src reveal d2" id="gCount">Empfohlen von Kunden aus Ihrer Nachbarschaft</p>
       <p class="reviews-note" id="gNote" hidden>Live aus unserem Google-Unternehmensprofil · automatisch aktualisiert</p>
       <div class="review-cta reveal d3">
-        <a class="btn-line" href="https://www.google.com/maps/place/?q=place_id:ChIJl8ZvoW0jvUcRYBnko9yyMqQ" target="_blank" rel="noopener">Alle Google-Bewertungen ansehen <span class="arr" aria-hidden="true">⟶</span></a>
+        <a class="btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=HOTI%20Garten-%20und%20Landschaftsbau%20Gr%C3%BCndau&amp;query_place_id=ChIJl8ZvoW0jvUcRYBnko9yyMqQ" target="_blank" rel="noopener">Alle Google-Bewertungen ansehen <span class="arr" aria-hidden="true">⟶</span></a>
         <a class="btn-line" href="https://search.google.com/local/writereview?placeid=ChIJl8ZvoW0jvUcRYBnko9yyMqQ" target="_blank" rel="noopener">Jetzt Google-Bewertung schreiben <span class="arr" aria-hidden="true">⟶</span></a>
       </div>
     </div>
@@ -1903,7 +1903,11 @@
   (function initGooglePlaces(){
     var key = GOOGLE_PLACES.apiKey;
     var shield = document.getElementById('gConsent');
-    if (!key || key.indexOf('HIER_EINF') !== -1) return; // noch kein Key: statische Anzeige bleibt, Shield bleibt versteckt
+    if (!key || key.indexOf('HIER_EINF') !== -1){
+      if (window.console) console.warn('[HOTI BAU] Google-API-Key fehlt noch (GOOGLE_PLACES.apiKey in index.html). '
+        + 'Solange werden keine Google-Bewertungen und -Fotos geladen. Anleitung siehe Kommentar über GOOGLE_PLACES.');
+      return; // statische Anzeige bleibt, Shield bleibt versteckt
+    }
 
     // DSGVO: Google-Inhalte erst nach Einwilligung laden (wie bei der Karte);
     // die Einwilligung wird gemerkt, danach aktualisieren sich die Daten automatisch.
