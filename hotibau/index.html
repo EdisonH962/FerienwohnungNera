@@ -1894,7 +1894,7 @@
   // API-Key in der Google Cloud Console anlegen (Places API (New) aktivieren) und
   // per HTTP-Referrer auf die eigene Domain beschränken.
   var GOOGLE_PLACES = {
-    apiKey: 'GOOGLE_API_KEY_HIER_EINFÜGEN',
+    apiKey: 'AIzaSyCjRKxw-hApB__jMRE9cnFzQ__rRRpZGog',
     placeId: 'ChIJl8ZvoW0jvUcRYBnko9yyMqQ',
     maxPhotos: 10,          /* wie viele Profil-Fotos in die Galerie übernommen werden */
     cacheMinutes: 60        /* Browser-Cache, schont das API-Kontingent */
@@ -1987,7 +1987,7 @@
       }
       var noteShown = false;
       photos.slice(0, GOOGLE_PLACES.maxPhotos).forEach(function(ph, i){
-        var url = 'https://places.googleapis.com/v1/' + ph.name + '/media?maxHeightPx=1600&key=' + key;
+        var url = 'https://places.googleapis.com/v1/' + ph.name + '/media?maxWidthPx=1600&maxHeightPx=1600&key=' + key;
         var fig = document.createElement('figure');
         fig.className = 'gallery-card gallery-card--img';
         fig.setAttribute('tabindex', '0');
@@ -1999,7 +1999,8 @@
         img.loading = 'lazy';
         img.addEventListener('error', function(){ if (fig.parentNode) fig.parentNode.removeChild(fig); });
         var cap = document.createElement('figcaption');
-        cap.textContent = 'Projekt';
+        // Google verlangt die Nennung der Bildquelle bei Places-Fotos
+        cap.textContent = isOwnerPhoto(ph) ? 'HOTI BAU' : ('Foto: ' + (((ph.authorAttributions || [{}])[0].displayName) || 'Google-Nutzer'));
         fig.appendChild(img); fig.appendChild(cap);
         strip.appendChild(fig);
         if (!noteShown){ document.getElementById('galleryNote').hidden = false; noteShown = true; }
