@@ -295,17 +295,10 @@
     will-change:transform;
   }
   .scene__bg.is-playing video{opacity:var(--scene-video-opacity, 0.5);}
-  .scene__photo{
-    position:absolute;inset:0;
-    background-size:cover;background-position:center;
-    opacity:0;transition:opacity 1.6s ease;
-  }
-  .scene__photo.is-on{opacity:var(--scene-video-opacity, 0.5);}
   /* Mobil: Videos deutlich ruhiger — kein Zusatz-Zoom, halbe Deckkraft, dunklerer Schleier */
   @media (max-width: 760px){
     .scene__bg video{transform:translate(-50%,-50%) scale(1.0);}
     .scene__bg.is-playing video{opacity:calc(var(--scene-video-opacity, 0.5) * 0.5);}
-    .scene__photo.is-on{opacity:calc(var(--scene-video-opacity, 0.5) * 0.62);}
     .scene__bg::after{
       background:linear-gradient(180deg, rgba(11,13,10,0.94) 0%, rgba(11,13,10,0.62) 28%, rgba(11,13,10,0.62) 70%, rgba(11,13,10,0.96) 100%);
     }
@@ -971,7 +964,7 @@
 
 <!-- ============ KAPITEL 1: HERO ============ -->
 <section class="scene hero" id="top" data-scene>
-  <div class="scene__bg" data-photo-bg style="--scene-video-opacity:0.55"></div>
+  <div class="scene__bg" data-video="hero" style="--scene-video-opacity:0.55; background-image:linear-gradient(180deg, rgba(11,13,10,0.6), rgba(11,13,10,0.6)), url('assets/hero-poster.jpg');"></div>
   <div class="glow-orb" style="width:44vw;height:44vw;right:-12%;top:8%;" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-logo reveal">
@@ -999,7 +992,7 @@
 
 <!-- ============ KAPITEL 2: LEISTUNGEN ============ -->
 <section class="scene" id="leistungen" data-scene>
-  <div class="scene__bg" data-photo-bg style="--scene-video-opacity:0.32"></div>
+  <div class="scene__bg" data-video="pflaster" style="--scene-video-opacity:0.32"></div>
   <div class="wrap">
     <p class="kicker reveal">Leistungen</p>
     <h2 class="display">
@@ -1170,7 +1163,7 @@
 
 <!-- ============ KAPITEL 4: ABLAUF ============ -->
 <section class="scene" id="ablauf" data-scene>
-  <div class="scene__bg" data-photo-bg style="--scene-video-opacity:0.3"></div>
+  <div class="scene__bg" data-video="mauer" style="--scene-video-opacity:0.3"></div>
   <div class="wrap">
     <p class="kicker reveal">So läuft Ihr Projekt</p>
     <h2 class="display">
@@ -1322,7 +1315,7 @@
 
 <!-- ============ KAPITEL 8: BEWERTUNGEN ============ -->
 <section class="scene" id="bewertungen" data-scene>
-  <div class="scene__bg" data-photo-bg style="--scene-video-opacity:0.32"></div>
+  <div class="scene__bg" data-video="terrasse" style="--scene-video-opacity:0.32"></div>
   <div class="wrap">
     <div class="rating-hero">
       <p class="kicker reveal" style="justify-content:center;">Kundenbewertungen</p>
@@ -1388,7 +1381,7 @@
 
 <!-- ============ KAPITEL 10: ANFRAGE ============ -->
 <section class="scene" id="anfrage" data-scene>
-  <div class="scene__bg" data-photo-bg style="--scene-video-opacity:0.25"></div>
+  <div class="scene__bg" data-video="hero" style="--scene-video-opacity:0.25"></div>
   <div class="wrap">
     <div class="booking-grid">
       <div>
@@ -1583,6 +1576,54 @@
 
   // ---------- Szenen-Videos (lokal, lazy geladen) ----------
 
+
+  var HOTI_MEDIA = {
+    hero:     'assets/hero.mp4',
+    pflaster: 'assets/broll-pflaster.mp4',
+    mauer:    'assets/broll-mauer.mp4',
+    terrasse: 'assets/broll-terrasse.mp4'
+  };
+
+  function initSceneVideo(bgEl){
+    var key = bgEl.getAttribute('data-video');
+    if (!key || !HOTI_MEDIA[key]) return;
+    if (prefersReduced) return;
+    var started = false;
+    function start(){
+      if (started) return; started = true;
+      var v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
+      v.setAttribute('muted',''); v.setAttribute('playsinline','');
+      v.preload = 'auto';
+      v.addEventListener('canplay', function(){
+        var p = v.play();
+        if (p && p.catch) p.catch(function(){ if (v.parentNode) v.parentNode.removeChild(v); });
+        if (window.innerWidth < 760) v.playbackRate = 0.7; // mobil: ruhigere Bewegung
+        bgEl.classList.add('is-playing');
+        // Poster-Foto ausblenden, sobald das Video eingeblendet ist (kein Doppelbild)
+        if (bgEl.style.backgroundImage){
+          setTimeout(function(){
+            if (bgEl.classList.contains('is-playing')) bgEl.style.backgroundImage = 'none';
+          }, 2100);
+        }
+      });
+      v.addEventListener('error', function(){
+        if (v.parentNode) v.parentNode.removeChild(v);
+        bgEl.classList.remove('is-playing');
+      });
+      v.src = HOTI_MEDIA[key];
+      bgEl.appendChild(v);
+    }
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting){ start(); io.disconnect(); }
+        });
+      }, {rootMargin: '500px'});
+      io.observe(bgEl.parentElement);
+    } else { start(); }
+  }
+  document.querySelectorAll('.scene__bg').forEach(initSceneVideo);
 
   // ---------- Scroll-Engine: Progress, Szenen-Zoom, Parallax ----------
   var progressBar = document.getElementById('scrollProgress');
@@ -1815,7 +1856,7 @@
   var GOOGLE_PLACES = {
     apiKey: 'AIzaSyCjRKxw-hApB__jMRE9cnFzQ__rRRpZGog',
     placeId: 'ChIJl8ZvoW0jvUcRYBnko9yyMqQ',
-    maxPhotos: 10,          /* wie viele Profil-Fotos in die Galerie übernommen werden */
+    maxPhotos: 20,          /* wie viele Profil-Fotos in die Galerie übernommen werden */
     cacheMinutes: 60        /* Browser-Cache, schont das API-Kontingent */
   };
 
@@ -1895,23 +1936,6 @@
         console.info('[HOTI BAU] Google-Fotos: ' + place.photos.length + ' gesamt, davon ' +
           photos.filter(isOwnerPhoto).length + ' vom Inhaber, ' + low + ' wegen niedriger Auflösung übersprungen.');
       }
-      // Deine eigenen Fotos werden auch zu den Szenen-Hintergründen
-      var bgSlots = document.querySelectorAll('.scene__bg[data-photo-bg]');
-      bgSlots.forEach(function(slot, n){
-        var ph = photos[n % photos.length];
-        if (!ph) return;
-        var bgUrl = 'https://places.googleapis.com/v1/' + ph.name + '/media?maxWidthPx=1900&maxHeightPx=1900&key=' + key;
-        var pre = new Image();
-        pre.onload = function(){
-          var layer = document.createElement('div');
-          layer.className = 'scene__photo';
-          layer.style.backgroundImage = "url('" + bgUrl + "')";
-          slot.insertBefore(layer, slot.firstChild);
-          requestAnimationFrame(function(){ layer.classList.add('is-on'); });
-        };
-        pre.src = bgUrl;
-      });
-
       var noteShown = false;
       photos.slice(0, GOOGLE_PLACES.maxPhotos).forEach(function(ph, i){
         var url = 'https://places.googleapis.com/v1/' + ph.name + '/media?maxWidthPx=1600&maxHeightPx=1600&key=' + key;
