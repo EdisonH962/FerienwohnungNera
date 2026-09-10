@@ -1346,11 +1346,7 @@
       </div>
     </div>
     <div class="reviews-grid" id="gReviews"></div>
-    <div class="consent-shield reveal" id="gConsent" hidden>
-      <p class="kicker" style="margin:0 0 14px;justify-content:center;">Echte Google-Bewertungen</p>
-      <p>Zum Schutz Ihrer Daten werden Bewertungen und Projektfotos aus unserem Google-Unternehmensprofil erst nach Ihrem Klick geladen. Dabei wird Ihre IP-Adresse an Google übermittelt (Details in der Datenschutzerklärung). Ihre Auswahl merken wir uns für den nächsten Besuch.</p>
-      <button class="btn-solid" id="gConsentBtn" type="button">Google-Bewertungen &amp; Fotos laden</button>
-    </div>
+    
   </div>
 </section>
 
@@ -1513,7 +1509,7 @@
           <h3>5. Google Maps (Click-to-Load)</h3>
           <p>Zur Anfahrtsdarstellung binden wir Kartenmaterial von Google Maps ein – jedoch erst, nachdem Sie aktiv auf „Karte laden“ geklickt haben (Zwei-Klick-Lösung). Erst dann wird eine Verbindung zu den Servern von Google aufgebaut und Ihre IP-Adresse übertragen (Art. 6 Abs. 1 lit. a DSGVO – Einwilligung durch aktives Laden). Ohne Ihren Klick werden keine Daten übertragen.</p>
           <h3>6. Google-Bewertungen (Places API)</h3>
-          <p>Zur Anzeige unserer aktuellen Google-Bewertungen und Projektfotos kann diese Website Daten über die Google Places API abrufen (Google Ireland Limited) – jedoch erst, nachdem Sie aktiv auf „Google-Bewertungen &amp; Fotos laden" geklickt haben (Zwei-Klick-Lösung, Art. 6 Abs. 1 lit. a DSGVO – Einwilligung). Erst dann wird Ihre IP-Adresse an Google übertragen. Ihre Einwilligung speichern wir ausschließlich lokal in Ihrem Browser (localStorage), damit die Inhalte bei künftigen Besuchen automatisch geladen werden; Sie können sie jederzeit durch Löschen Ihrer Browserdaten widerrufen. Es werden dabei keine Cookies gesetzt.</p>
+          <p>Zur Anzeige unserer aktuellen Google-Bewertungen und eigenen Projektfotos ruft diese Website Daten über die Google Places API ab (Google Ireland Limited). Dabei wird Ihre IP-Adresse an Google übertragen. Rechtsgrundlage ist unser berechtigtes Interesse an der transparenten Darstellung authentischer, überprüfbarer Kundenbewertungen und eigener Arbeitsergebnisse (Art. 6 Abs. 1 lit. f DSGVO). Es werden dabei keine Cookies gesetzt und keine Profile gebildet. Sie können der Verarbeitung jederzeit unter den oben genannten Kontaktdaten widersprechen.</p>
           <h3>7. Kontaktaufnahme per Formular, E-Mail, Telefon oder WhatsApp</h3>
           <p>Unser Anfrage-Formular überträgt keine Daten an einen Server dieser Website. Beim Klick auf „Anfragen“ öffnet sich Ihr eigenes E-Mail-Programm mit einer vorbereiteten Nachricht an uns – Sie behalten die volle Kontrolle über den Versand. Wenn Sie uns per E-Mail, Telefon oder WhatsApp kontaktieren, verarbeiten wir Ihre Angaben (Name, Kontaktdaten, Anliegen) ausschließlich zur Bearbeitung Ihrer Anfrage und für mögliche Anschlussfragen (Art. 6 Abs. 1 lit. b DSGVO). Bei der Nutzung von WhatsApp gelten ergänzend die Datenschutzhinweise der WhatsApp Ireland Ltd.; dabei können Daten an Server außerhalb der EU übertragen werden.</p>
           <h3>8. Eigene Bild- und Videoinhalte</h3>
@@ -1902,17 +1898,10 @@
 
   (function initGooglePlaces(){
     var key = GOOGLE_PLACES.apiKey;
-    var shield = document.getElementById('gConsent');
     if (!key || key.indexOf('HIER_EINF') !== -1){
       if (window.console) console.warn('[HOTI BAU] Google-API-Key fehlt noch (GOOGLE_PLACES.apiKey in index.html). '
         + 'Solange werden keine Google-Bewertungen und -Fotos geladen. Anleitung siehe Kommentar über GOOGLE_PLACES.');
       return; // statische Anzeige bleibt, Shield bleibt versteckt
-    }
-
-    // DSGVO: Google-Inhalte erst nach Einwilligung laden (wie bei der Karte);
-    // die Einwilligung wird gemerkt, danach aktualisieren sich die Daten automatisch.
-    function hasConsent(){
-      try { return localStorage.getItem('hotiGoogleConsent') === 'yes'; } catch (err) { return false; }
     }
 
     function render(place){
@@ -1976,10 +1965,8 @@
         return a.toLowerCase().indexOf('hoti') !== -1 ? 1 : 0;
       }
       var photos = (place.photos || []).slice()
-        .filter(function(ph){ return (ph.widthPx || 9999) >= 700; })
-        .sort(function(a, b){
-          return (isOwnerPhoto(b) - isOwnerPhoto(a)) || ((b.widthPx || 0) - (a.widthPx || 0));
-        });
+        .filter(function(ph){ return isOwnerPhoto(ph) && (ph.widthPx || 9999) >= 700; })
+        .sort(function(a, b){ return (b.widthPx || 0) - (a.widthPx || 0); });
       if (window.console && place.photos){
         var low = place.photos.filter(function(ph){ return (ph.widthPx || 9999) < 700; }).length;
         console.info('[HOTI BAU] Google-Fotos: ' + place.photos.length + ' gesamt, davon ' +
@@ -1999,8 +1986,8 @@
         img.loading = 'lazy';
         img.addEventListener('error', function(){ if (fig.parentNode) fig.parentNode.removeChild(fig); });
         var cap = document.createElement('figcaption');
-        // Google verlangt die Nennung der Bildquelle bei Places-Fotos
-        cap.textContent = isOwnerPhoto(ph) ? 'HOTI BAU' : ('Foto: ' + (((ph.authorAttributions || [{}])[0].displayName) || 'Google-Nutzer'));
+        // Es werden ausschliesslich eigene Fotos gezeigt -> Quelle immer HOTI BAU
+        cap.textContent = 'HOTI BAU';
         fig.appendChild(img); fig.appendChild(cap);
         strip.appendChild(fig);
         if (!noteShown){ document.getElementById('galleryNote').hidden = false; noteShown = true; }
@@ -2025,16 +2012,7 @@
         .catch(function(){ /* API nicht erreichbar → statische Anzeige bleibt */ });
     }
 
-    if (hasConsent()){
-      load();
-    } else if (shield){
-      shield.hidden = false;
-      document.getElementById('gConsentBtn').addEventListener('click', function(){
-        try { localStorage.setItem('hotiGoogleConsent', 'yes'); } catch (err) {}
-        shield.hidden = true;
-        load();
-      });
-    }
+    load();
   })();
 
   // ---------- Cursor-Glow (nur Desktop) ----------
