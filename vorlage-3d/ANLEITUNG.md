@@ -25,6 +25,7 @@ der Branche an. In der JSON-Datei steuert `OBJEKT_3D`, welches geladen wird.
 | `mauer` | Natursteinmauer | Garten- und Landschaftsbau, Pflasterarbeiten, Maurer, Tiefbau |
 | `zahnrad` | Zahnrad | Metallbau, Schlosserei, KFZ-Werkstatt, Maschinenbau |
 | `baum` | Baum | Gartenpflege, Baumpflege, Baumfällung, Gärtnerei |
+| `fassade` | Hausfassade mit Wassertropfen | Fassadenreinigung, Maler, Stuckateur, Gerüstbau, Gebäudereinigung |
 
 Das Skript kopiert nur das gewählte Objekt in die fertige Seite — die anderen
 landen nicht beim Kunden.

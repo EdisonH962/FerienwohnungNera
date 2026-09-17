@@ -29,6 +29,7 @@ OBJEKTE = {
     "mauer":      "Natursteinmauer – GaLaBau, Pflasterarbeiten, Maurer, Tiefbau",
     "zahnrad":    "Zahnrad – Metallbau, Schlosserei, KFZ, Maschinenbau",
     "baum":       "Baum – Gartenpflege, Baumpflege, Baumfällung, Gärtnerei",
+    "fassade":    "Hausfassade – Fassadenreinigung, Maler, Gerüstbau, Gebäudereinigung",
 }
 
 
