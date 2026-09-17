@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOTI WEB · Websites für Handwerksbetriebe im Main-Kinzig-Kreis</title>
+<meta name="description" content="Moderne Websites für Handwerker, Gastgeber und kleine Betriebe. Festpreis ab 390 €, fertig in zwei Wochen. Mit Google-Bewertungen, mobil optimiert, aus dem Main-Kinzig-Kreis.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HOTI WEB – Websites für Handwerksbetriebe">
+<meta property="og:description" content="Websites, die Anfragen bringen. Festpreis ab 390 €, fertig in zwei Wochen.">
+<meta property="og:locale" content="de_DE">
+<meta name="theme-color" content="#08100C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08100C;
+    --bg-2:#0D1912;
+    --panel:rgba(18,34,25,0.55);
+    --gold:#C89035;
+    --gold-bright:#EAD196;
+    --gold-glow:rgba(216,166,80,0.5);
+    --green:#72B846;
+    --green-bright:#9BDC66;
+    --cream:#F2F1E8;
+    --cream-dim:rgba(242,241,232,0.66);
+    --cream-faint:rgba(242,241,232,0.40);
+    --line:rgba(242,241,232,0.12);
+    --line-gold:rgba(200,144,53,0.34);
+    --wa:#25D366;
+    --maxw:1180px;
+    --display:'Anton','Arial Narrow',Impact,sans-serif;
+    --body:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:80px;}
+  body{
+    margin:0;background:var(--bg);color:var(--cream);
+    font-family:var(--body);font-size:16.5px;font-weight:300;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:var(--gold-bright);}
+  ::selection{background:var(--gold);color:var(--bg);}
+
+  /* ---------- Typografie ---------- */
+  .display{
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    line-height:1.0;letter-spacing:.01em;margin:0;color:var(--cream);
+    text-shadow:0 0 26px rgba(234,209,150,.24);
+  }
+  .display em{font-style:normal;color:var(--gold-bright);text-shadow:0 0 30px var(--gold-glow);}
+  h2.display{font-size:clamp(2.1rem,5.4vw,3.9rem);}
+  .kicker{
+    font-weight:700;font-size:.76rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--gold);margin:0 0 20px;display:flex;align-items:center;gap:13px;
+  }
+  .kicker::before{content:"";width:38px;height:1px;background:var(--gold);box-shadow:0 0 8px var(--gold-glow);flex:none;}
+  .kicker--mitte{justify-content:center;}
+  .lede{font-size:clamp(1rem,1.35vw,1.14rem);color:var(--cream-dim);max-width:36em;}
+
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4.5vw,44px);}
+  section{padding:clamp(70px,9vw,120px) 0;position:relative;}
+  .tint{background:linear-gradient(180deg,transparent,var(--bg-2) 18%,var(--bg-2) 82%,transparent);}
+
+  /* ---------- Kopfzeile ---------- */
+  .kopf{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:18px clamp(20px,4.5vw,44px);
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    transition:background .45s ease,padding .35s ease;
+  }
+  .kopf.fest{background:linear-gradient(180deg,rgba(8,16,12,.94),rgba(8,16,12,0));padding-top:12px;padding-bottom:12px;}
+  .marke{font-family:var(--display);font-size:1.4rem;letter-spacing:.12em;color:var(--cream);text-decoration:none;}
+  .marke span{color:var(--gold-bright);}
+  .kopf-tel{
+    display:inline-flex;align-items:center;gap:10px;color:var(--cream);text-decoration:none;
+    font-weight:700;font-size:.78rem;letter-spacing:.14em;
+    padding:11px 18px;border:1px solid var(--line-gold);border-radius:999px;
+    transition:border-color .3s ease,box-shadow .3s ease;
+  }
+  .kopf-tel:hover{border-color:var(--gold-bright);box-shadow:0 0 20px rgba(200,144,53,.3);}
+  .kopf-tel svg{width:15px;height:15px;fill:var(--gold-bright);}
+  @media (max-width:560px){ .kopf-tel span{display:none;} .kopf-tel{padding:11px 13px;} }
+
+  /* ---------- Einstieg ---------- */
+  .start{
+    min-height:100vh;min-height:100dvh;display:flex;align-items:center;
+    padding-top:110px;padding-bottom:70px;overflow:hidden;
+  }
+  .start::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(52% 46% at 74% 16%,rgba(200,144,53,.20),transparent 62%),
+      radial-gradient(60% 50% at 12% 78%,rgba(114,184,70,.14),transparent 64%),
+      radial-gradient(120% 90% at 50% 40%,var(--bg-2),var(--bg) 72%);
+  }
+  .start .wrap{position:relative;z-index:2;}
+  .start h1{font-size:clamp(2.6rem,8.2vw,6.2rem);}
+  .start .lede{margin:28px 0 38px;}
+  .knopfreihe{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+  .beleg{
+    list-style:none;display:flex;gap:26px;flex-wrap:wrap;margin:52px 0 0;padding:0;
+    font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-faint);font-weight:500;
+  }
+  .beleg li{display:flex;align-items:center;gap:9px;}
+  .beleg li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold-glow);}
+  .beleg b{color:var(--gold-bright);font-weight:700;}
+
+  /* ---------- Knöpfe ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:11px;
+    text-decoration:none;cursor:pointer;border:none;font-family:var(--body);
+    font-weight:700;font-size:.82rem;letter-spacing:.17em;text-transform:uppercase;
+    padding:18px 34px;border-radius:3px;transition:transform .3s ease,box-shadow .3s ease,background .3s ease;
+  }
+  .btn--voll{background:linear-gradient(135deg,var(--gold),#AC7822);color:#0B1611;box-shadow:0 0 28px rgba(200,144,53,.32);}
+  .btn--voll:hover{box-shadow:0 0 44px rgba(200,144,53,.55);transform:translateY(-2px);}
+  .btn--rand{background:transparent;color:var(--cream);border:1px solid var(--line-gold);}
+  .btn--rand:hover{border-color:var(--gold-bright);box-shadow:0 0 22px rgba(200,144,53,.28);transform:translateY(-2px);}
+  .btn--wa{background:var(--wa);color:#07210F;}
+  .btn--wa:hover{box-shadow:0 0 34px rgba(37,211,102,.45);transform:translateY(-2px);}
+
+  /* ---------- Referenzen ---------- */
+  .ref{
+    display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,38px);margin-top:56px;
+  }
+  .karte{
+    border:1px solid var(--line);border-radius:6px;overflow:hidden;
+    background:var(--panel);backdrop-filter:blur(6px);
+    display:flex;flex-direction:column;
+    transition:border-color .4s ease,box-shadow .4s ease,transform .4s ease;
+  }
+  .karte:hover{border-color:var(--line-gold);box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 30px rgba(200,144,53,.14);transform:translateY(-5px);}
+  .karte__bild{position:relative;overflow:hidden;aspect-ratio:16/10;background:var(--bg-2);}
+  .karte__bild img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+  .karte:hover .karte__bild img{transform:scale(1.04);}
+  .karte__inhalt{padding:26px 26px 28px;display:flex;flex-direction:column;gap:12px;flex:1;}
+  .karte__inhalt h3{
+    font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.05em;
+    font-size:1.5rem;margin:0;color:var(--cream);
+  }
+  .karte__art{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .karte__inhalt p{margin:0;font-size:.93rem;color:var(--cream-dim);flex:1;}
+  .marken{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+  .marken span{
+    font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-faint);
+    border:1px solid var(--line);border-radius:999px;padding:6px 12px;
+  }
+  .karte__link{
+    margin-top:10px;display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+    color:var(--gold-bright);text-decoration:none;font-weight:700;
+    font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;
+    border-bottom:1px solid var(--line-gold);padding-bottom:6px;transition:gap .3s ease,border-color .3s ease;
+  }
+  .karte__link:hover{gap:15px;border-color:var(--gold-bright);}
+
+  /* ---------- Leistungen ---------- */
+  .raster{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:52px;}
+  .zelle{background:var(--bg);padding:32px 26px;display:flex;flex-direction:column;gap:13px;transition:background .35s ease;}
+  .zelle:hover{background:var(--bg-2);}
+  .zelle svg{width:28px;height:28px;stroke:var(--gold-bright);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 7px rgba(200,144,53,.45));}
+  .zelle h3{font-size:1rem;margin:0;color:var(--cream);font-weight:700;letter-spacing:.02em;}
+  .zelle p{margin:0;font-size:.9rem;color:var(--cream-dim);}
+
+  /* ---------- Preise ---------- */
+  .preise{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,30px);margin-top:54px;align-items:start;}
+  .paket{
+    border:1px solid var(--line);border-radius:6px;padding:clamp(28px,3.4vw,40px);
+    background:var(--panel);backdrop-filter:blur(6px);position:relative;
+    display:flex;flex-direction:column;gap:18px;
+  }
+  .paket--top{border-color:var(--line-gold);box-shadow:0 0 44px rgba(200,144,53,.13);}
+  .paket__fahne{
+    position:absolute;top:-13px;left:clamp(28px,3.4vw,40px);
+    background:linear-gradient(135deg,var(--gold),#AC7822);color:#0B1611;
+    font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    padding:6px 14px;border-radius:3px;
+  }
+  .paket h3{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.05em;font-size:1.6rem;margin:0;}
+  .paket__preis{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;}
+  .paket__preis b{
+    font-family:var(--display);font-weight:400;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1;
+    color:var(--gold-bright);text-shadow:0 0 28px var(--gold-glow);
+  }
+  .paket__preis small{font-size:.86rem;color:var(--cream-faint);letter-spacing:.06em;}
+  .paket__mtl{font-size:.88rem;color:var(--cream-dim);margin:-6px 0 0;}
+  .paket__mtl b{color:var(--gold-bright);font-weight:700;}
+  .paket ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:11px;}
+  .paket li{display:flex;gap:11px;align-items:flex-start;font-size:.92rem;color:var(--cream-dim);}
+  .paket li::before{content:"";flex:none;width:16px;height:16px;margin-top:4px;border-radius:50%;background:rgba(200,144,53,.16);border:1px solid var(--line-gold);}
+  .paket .btn{margin-top:12px;width:100%;}
+  .preis-fuss{margin-top:26px;font-size:.82rem;color:var(--cream-faint);text-align:center;}
+
+  /* ---------- Ablauf ---------- */
+  .schritte{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,2.6vw,30px);margin-top:52px;counter-reset:s;}
+  .schritt{position:relative;padding-top:52px;}
+  .schritt::before{
+    counter-increment:s;content:counter(s,decimal-leading-zero);
+    position:absolute;top:0;left:0;
+    font-family:var(--display);font-size:2.2rem;color:var(--gold-bright);
+    text-shadow:0 0 22px var(--gold-glow);opacity:.85;
+  }
+  .schritt h3{font-size:1rem;margin:0 0 9px;color:var(--cream);font-weight:700;}
+  .schritt p{margin:0;font-size:.9rem;color:var(--cream-dim);}
+
+  /* ---------- Kontakt ---------- */
+  .kontakt{text-align:center;}
+  .kontakt .display{font-size:clamp(2.2rem,6.4vw,4.6rem);}
+  .kontaktreihe{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:40px;}
+  .kontaktdaten{
+    margin-top:44px;display:flex;gap:clamp(20px,4vw,46px);justify-content:center;flex-wrap:wrap;
+    font-size:.86rem;color:var(--cream-dim);
+  }
+  .kontaktdaten a{color:var(--cream-dim);text-decoration:none;transition:color .3s ease;}
+  .kontaktdaten a:hover{color:var(--gold-bright);}
+
+  /* ---------- Fuß ---------- */
+  footer{border-top:1px solid var(--line);padding:38px 0 46px;}
+  .fuss{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:.76rem;color:var(--cream-faint);letter-spacing:.06em;}
+  .fuss a{color:var(--cream-faint);text-decoration:none;}
+  .fuss a:hover{color:var(--gold-bright);}
+  details{border:1px solid var(--line);border-radius:5px;margin-top:14px;background:rgba(13,25,18,.55);}
+  summary{cursor:pointer;padding:16px 20px;font-weight:700;font-size:.84rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cream-dim);list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"+";float:right;color:var(--gold);}
+  details[open] summary::after{content:"–";}
+  .rechtstext{padding:0 20px 22px;font-size:.86rem;color:var(--cream-dim);}
+  .rechtstext h4{margin:18px 0 6px;font-size:.9rem;color:var(--cream);}
+  .rechtstext p{margin:0 0 10px;}
+
+  /* ---------- Einblenden ---------- */
+  .auf{opacity:0;transform:translateY(34px);transition:opacity .85s ease,transform .85s cubic-bezier(.22,1,.36,1);}
+  .auf.da{opacity:1;transform:none;}
+  .v1{transition-delay:.1s;} .v2{transition-delay:.2s;} .v3{transition-delay:.3s;}
+
+  /* ---------- Fokus ---------- */
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px;}
+  .sprung{position:absolute;left:-9999px;top:0;z-index:200;background:var(--gold);color:#0B1611;padding:12px 20px;font-weight:700;}
+  .sprung:focus{left:12px;top:12px;}
+
+  /* ---------- Schmale Geräte ---------- */
+  @media (max-width:980px){
+    .ref{grid-template-columns:1fr;}
+    .raster{grid-template-columns:1fr 1fr;}
+    .preise{grid-template-columns:1fr;}
+    .schritte{grid-template-columns:1fr 1fr;row-gap:36px;}
+  }
+  @media (max-width:600px){
+    body{font-size:15.5px;}
+    .raster{grid-template-columns:1fr;}
+    .schritte{grid-template-columns:1fr;}
+    .btn{width:100%;}
+    .knopfreihe{flex-direction:column;align-items:stretch;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
+    .auf{opacity:1!important;transform:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<a class="sprung" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="kopf" id="kopf">
+  <a class="marke" href="#start">HOTI<span> WEB</span></a>
+  <a class="kopf-tel" href="tel:+491714912034">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg>
+    <span>0171 491 20 34</span>
+  </a>
+</header>
+
+<main id="inhalt">
+
+<!-- ================= EINSTIEG ================= -->
+<section class="start" id="start">
+  <div class="wrap">
+    <p class="kicker auf">Websites für Handwerk &amp; Gastgewerbe · Main-Kinzig-Kreis</p>
+    <h1 class="display auf v1">Ihre Arbeit ist<br>erstklassig.<br><em>Ihre Website auch.</em></h1>
+    <p class="lede auf v2">Ich baue Websites für Handwerksbetriebe und Gastgeber in der Region — mit echten Google-Bewertungen, für das Handy gemacht und zum festen Preis. Keine Agenturpreise, keine Vertragsfallen.</p>
+    <div class="knopfreihe auf v3">
+      <a class="btn btn--voll" href="#kontakt">Kostenlos beraten lassen</a>
+      <a class="btn btn--rand" href="#arbeiten">Arbeiten ansehen</a>
+    </div>
+    <ul class="beleg auf v3">
+      <li><b>Ab 390 €</b> Festpreis</li>
+      <li><b>2 Wochen</b> bis fertig</li>
+      <li>Aus dem <b>Main-Kinzig-Kreis</b></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= ARBEITEN ================= -->
+<section class="tint" id="arbeiten">
+  <div class="wrap">
+    <p class="kicker auf">Arbeiten</p>
+    <h2 class="display auf">Zwei Betriebe,<br><em>zwei Handschriften.</em></h2>
+    <div class="ref">
+
+      <article class="karte auf v1">
+        <div class="karte__bild">
+          <img src="assets/ref-hotibau.webp" alt="Startseite der Website von HOTI BAU Garten- und Landschaftsbau mit dunklem Design und großer Überschrift" width="1000" height="625" loading="lazy">
+        </div>
+        <div class="karte__inhalt">
+          <span class="karte__art">Garten- &amp; Landschaftsbau</span>
+          <h3>HOTI BAU</h3>
+          <p>Ein Betrieb mit 5,0 Sternen bei Google — das sah man vorher nirgends. Jetzt lädt die Seite Bewertungen und Projektfotos automatisch aus dem Unternehmensprofil. Der Betrieb muss nichts pflegen.</p>
+          <div class="marken">
+            <span>Google-Bewertungen live</span><span>Video-Einstieg</span><span>Festpreis-Rechner</span>
+          </div>
+          <a class="karte__link" href="https://hotibau.com" target="_blank" rel="noopener">Seite ansehen ⟶</a>
+        </div>
+      </article>
+
+      <article class="karte auf v2">
+        <div class="karte__bild">
+          <img src="assets/ref-nera.webp" alt="Startseite der Ferienwohnung NERA mit dreidimensionalem goldenem Schlüssel im Einstieg" width="1000" height="625" loading="lazy">
+        </div>
+        <div class="karte__inhalt">
+          <span class="karte__art">Ferienwohnung</span>
+          <h3>Ferienwohnung NERA</h3>
+          <p>Hier war die Aufgabe, Ruhe zu verkaufen. Der Einstieg ist eine echte 3D-Szene: Ein goldener Schlüssel dreht sich, die Kamera fährt beim Scrollen durch den Raum — gebaut ohne fremde Bibliotheken.</p>
+          <div class="marken">
+            <span>3D-Einstieg</span><span>Buchungsanfrage</span><span>Bildergalerie</span>
+          </div>
+          <a class="karte__link" href="#kontakt">Ähnliches anfragen ⟶</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEISTUNGEN ================= -->
+<section id="leistungen">
+  <div class="wrap">
+    <p class="kicker auf">Was Sie bekommen</p>
+    <h2 class="display auf">Alles drin.<br><em>Ohne Kleingedrucktes.</em></h2>
+    <div class="raster auf v1">
+
+      <div class="zelle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg>
+        <h3>Zuerst fürs Handy</h3>
+        <p>Vier von fünf Besuchern kommen mit dem Telefon. Deshalb wird jede Seite zuerst dort gebaut und getestet — nicht am großen Bildschirm.</p>
+      </div>
+
+      <div class="zelle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.6 2.9 6 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.5l6.5-.9z"/></svg>
+        <h3>Google-Bewertungen live</h3>
+        <p>Ihre echten Sterne und Kundenstimmen erscheinen automatisch auf der Seite. Neue Bewertungen kommen von selbst dazu — Sie pflegen nichts.</p>
+      </div>
+
+      <div class="zelle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7.2"/><path d="m16.5 16.5 4.5 4.5"/></svg>
+        <h3>In der Region gefunden</h3>
+        <p>Ortsnamen, Gewerke und Öffnungszeiten stehen so auf der Seite, dass Google sie versteht. Damit Sie gefunden werden, wenn jemand in der Nähe sucht.</p>
+      </div>
+
+      <div class="zelle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16v13H4z"/><path d="m4 6.5 8 6 8-6"/></svg>
+        <h3>Anfragen statt Klicks</h3>
+        <p>Telefon, WhatsApp und Anfrageformular sind immer in Reichweite. Eine schöne Seite nützt nichts, wenn niemand anruft.</p>
+      </div>
+
+      <div class="zelle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8s6.4 2.3 6.4 6.9c0 5.5-6.4 11.5-6.4 11.5S5.6 15.2 5.6 9.7C5.6 5.1 12 2.8 12 2.8z"/><circle cx="12" cy="9.6" r="2.3"/></svg>
+        <h3>Rechtssicher aufgesetzt</h3>
+        <p>Impressum, Datenschutz und Cookie-Verzicht sind vorbereitet. Google-Inhalte werden datensparsam eingebunden, Karten erst nach Klick.</p>
+      </div>
+
+      <div class="zelle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2.6 4.2 13.4h6.3l-1.4 8 9-10.8h-6.3z"/></svg>
+        <h3>Schnell geladen</h3>
+        <p>Keine schwerfälligen Baukästen. Handgeschriebener Code, komprimierte Bilder — die Seite steht, bevor der Besucher wieder weg ist.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= PREISE ================= -->
+<section class="tint" id="preise">
+  <div class="wrap">
+    <p class="kicker auf">Preise</p>
+    <h2 class="display auf">Sie wissen vorher,<br><em>was es kostet.</em></h2>
+    <div class="preise">
+
+      <div class="paket paket--top auf v1">
+        <div class="paket__fahne">Meistgewählt</div>
+        <h3>Standard</h3>
+        <div class="paket__preis"><b>390 €</b><small>einmalig</small></div>
+        <p class="paket__mtl">dazu <b>39 € im Monat</b> für Hosting und Betreuung</p>
+        <ul>
+          <li>Komplette Website mit allen Bereichen</li>
+          <li>Bewegter Video-Einstieg</li>
+          <li>Google-Bewertungen und -Fotos automatisch</li>
+          <li>Anfrageformular, WhatsApp, Karte</li>
+          <li>Impressum und Datenschutz vorbereitet</li>
+          <li>Änderungen im Monatspreis enthalten</li>
+        </ul>
+        <a class="btn btn--voll" href="#kontakt">Beratung anfragen</a>
+      </div>
+
+      <div class="paket auf v2">
+        <h3>Premium</h3>
+        <div class="paket__preis"><b>690 €</b><small>einmalig</small></div>
+        <p class="paket__mtl">dazu <b>49 € im Monat</b> für Hosting und Betreuung</p>
+        <ul>
+          <li>Alles aus dem Standard-Paket</li>
+          <li>Dreidimensionaler Einstieg, passend zum Gewerk</li>
+          <li>Kamerafahrt beim Scrollen</li>
+          <li>Aufwertung Ihrer Fotos</li>
+          <li>Texte für Ihre Leistungen geschrieben</li>
+          <li>Vorher-Nachher-Regler für Ihre Projekte</li>
+        </ul>
+        <a class="btn btn--rand" href="#kontakt">Premium anfragen</a>
+      </div>
+
+    </div>
+    <p class="preis-fuss">Mindestlaufzeit 12 Monate, danach monatlich kündbar. Domain und Hosting laufen auf Ihren Namen — die Seite gehört Ihnen. Alle Preise verstehen sich als Endpreise; als Kleinunternehmer nach §&nbsp;19 UStG weise ich keine Umsatzsteuer aus.</p>
+  </div>
+</section>
+
+<!-- ================= ABLAUF ================= -->
+<section id="ablauf">
+  <div class="wrap">
+    <p class="kicker auf">Ablauf</p>
+    <h2 class="display auf">Vier Schritte.<br><em>Zwei Wochen.</em></h2>
+    <div class="schritte auf v1">
+      <div class="schritt">
+        <h3>Gespräch</h3>
+        <p>Wir telefonieren oder treffen uns. Ich schaue mir Ihren Betrieb an und sage Ihnen ehrlich, ob sich eine Seite für Sie lohnt.</p>
+      </div>
+      <div class="schritt">
+        <h3>Entwurf</h3>
+        <p>Sie bekommen Ihre Seite als fertigen Entwurf zu sehen — mit Ihren Fotos und Bewertungen. Erst dann entscheiden Sie.</p>
+      </div>
+      <div class="schritt">
+        <h3>Feinschliff</h3>
+        <p>Texte, Bilder, Farben: Wir gehen gemeinsam durch, was noch anders soll. Zwei Korrekturrunden sind eingerechnet.</p>
+      </div>
+      <div class="schritt">
+        <h3>Start</h3>
+        <p>Ich bringe die Seite unter Ihre Adresse, melde sie bei Google an und zeige Ihnen, wie Sie Fotos nachlegen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KONTAKT ================= -->
+<section class="tint kontakt" id="kontakt">
+  <div class="wrap">
+    <p class="kicker kicker--mitte auf">Kontakt</p>
+    <h2 class="display auf">Erzählen Sie mir<br><em>von Ihrem Betrieb.</em></h2>
+    <p class="lede auf v1" style="margin:26px auto 0;">Das Erstgespräch kostet nichts und dauert zwanzig Minuten. Danach wissen Sie, was eine Seite für Ihren Betrieb bringen würde — und was nicht.</p>
+    <div class="kontaktreihe auf v2">
+      <a class="btn btn--wa" id="waLink" href="https://wa.me/491714912034" target="_blank" rel="noopener">Per WhatsApp schreiben</a>
+      <a class="btn btn--voll" href="tel:+491714912034">0171 491 20 34 anrufen</a>
+      <a class="btn btn--rand" href="mailto:edison.hoti@web.de?subject=Anfrage%20Website">E-Mail senden</a>
+    </div>
+    <div class="kontaktdaten auf v3">
+      <span>Mo–Fr 09:00–19:00 Uhr</span>
+      <a href="mailto:edison.hoti@web.de">edison.hoti@web.de</a>
+      <span>Main-Kinzig-Kreis &amp; Umgebung</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fuss">
+      <span>© <span id="jahr">2026</span> HOTI WEB · Websites für Handwerksbetriebe</span>
+      <span><a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a></span>
+    </div>
+
+    <details id="impressum">
+      <summary>Impressum</summary>
+      <div class="rechtstext">
+        <h4>Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG)</h4>
+        <p>
+          Edison Hoti<br>
+          Wiesenstraße 20b<br>
+          63584 Gründau
+        </p>
+        <p>Telefon: 0171 491 20 34<br>E-Mail: edison.hoti@web.de</p>
+        <h4>Umsatzsteuer</h4>
+        <p>Als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet.</p>
+        <h4>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h4>
+        <p>Edison Hoti, Anschrift wie oben</p>
+        <h4>EU-Streitschlichtung</h4>
+        <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit: https://ec.europa.eu/consumers/odr/. Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+        <p><em>Bitte vor der Veröffentlichung prüfen und ergänzen: Gewerbeanmeldung, gegebenenfalls Umsatzsteuer-Identifikationsnummer.</em></p>
+      </div>
+    </details>
+
+    <details id="datenschutz">
+      <summary>Datenschutzerklärung</summary>
+      <div class="rechtstext">
+        <h4>1. Verantwortlicher</h4>
+        <p>Edison Hoti, Wiesenstraße 20b, 63584 Gründau · E-Mail: edison.hoti@web.de · Telefon: 0171 491 20 34</p>
+        <h4>2. Ihre Rechte</h4>
+        <p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Außerdem steht Ihnen ein Beschwerderecht bei einer Aufsichtsbehörde zu, etwa beim Hessischen Beauftragten für Datenschutz und Informationsfreiheit.</p>
+        <h4>3. Aufruf dieser Website</h4>
+        <p>Beim Aufruf erhebt der Hosting-Anbieter automatisch technische Daten in Server-Logfiles (Browsertyp, Betriebssystem, Referrer-URL, Uhrzeit, IP-Adresse). Diese dienen ausschließlich dem sicheren Betrieb und werden nicht mit anderen Daten zusammengeführt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.</p>
+        <h4>4. Kontaktaufnahme</h4>
+        <p>Wenn Sie mich per E-Mail, Telefon oder WhatsApp kontaktieren, verarbeite ich Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage (Art. 6 Abs. 1 lit. b DSGVO). Diese Website setzt keine Cookies und bindet kein Analysewerkzeug ein.</p>
+        <h4>5. Schriftarten</h4>
+        <p>Die Schriften werden über Google Fonts geladen; dabei wird Ihre IP-Adresse an Google übermittelt. Die Links zu WhatsApp und zu den gezeigten Referenzseiten führen zu externen Anbietern mit eigenen Datenschutzbestimmungen.</p>
+      </div>
+    </details>
+  </div>
+</footer>
+
+<script>
+  /* Jahreszahl */
+  document.getElementById('jahr').textContent = new Date().getFullYear();
+
+  /* WhatsApp mit vorbereitetem Text */
+  var waNummer = '491714912034';
+  var waText = 'Hallo, ich habe Ihre Seite gesehen und interessiere mich für eine Website für meinen Betrieb.';
+  document.getElementById('waLink').href = 'https://wa.me/' + waNummer + '?text=' + encodeURIComponent(waText);
+
+  /* Kopfzeile abdunkeln, sobald gescrollt wird */
+  var kopf = document.getElementById('kopf');
+  function beiScroll(){ kopf.classList.toggle('fest', window.scrollY > 12); }
+  window.addEventListener('scroll', beiScroll, {passive:true});
+  beiScroll();
+
+  /* Inhalte beim Erreichen einblenden */
+  var reduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var elemente = document.querySelectorAll('.auf');
+  if (reduziert || !('IntersectionObserver' in window)) {
+    elemente.forEach(function(el){ el.classList.add('da'); });
+  } else {
+    var beobachter = new IntersectionObserver(function(eintraege){
+      eintraege.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('da'); beobachter.unobserve(e.target); }
+      });
+    }, {threshold: 0.14});
+    elemente.forEach(function(el){ beobachter.observe(el); });
+  }
+
+  /* Rechtliche Abschnitte öffnen, wenn direkt darauf verlinkt wird */
+  document.querySelectorAll('a[href="#impressum"], a[href="#datenschutz"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var ziel = document.querySelector(a.getAttribute('href'));
+      if (ziel) ziel.open = true;
+    });
+  });
+</script>
+
+</body>
+</html>
