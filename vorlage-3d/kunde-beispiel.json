@@ -1,0 +1,28 @@
+{
+  "_hinweis": "Für jeden Kunden kopieren und ausfüllen. Dann: python3 neue-seite-3d.py kunde-XY.json",
+
+  "ordner": "kunde-demo-3d",
+
+  "OBJEKT_3D": "mauer",
+  "_hinweis_objekt": "schluessel | mauer | zahnrad | baum — siehe ANLEITUNG.md",
+
+  "FIRMA_KURZ": "MUSTER BAU",
+  "FIRMA_LANG": "Mustermann Garten- und Landschaftsbau",
+  "INHABER": "Max Mustermann",
+
+  "TEL_ANZEIGE": "06051 123456",
+  "TEL_INTL": "496051123456",
+  "EMAIL": "info@musterbau.de",
+
+  "STRASSE": "Musterstraße 1",
+  "PLZ_ORT": "63571 Gelnhausen",
+  "ORT": "Gelnhausen",
+
+  "GOOGLE_PLACE_ID": "ChIJ...",
+  "GOOGLE_API_KEY": "GOOGLE_API_KEY_HIER_EINFÜGEN",
+
+  "FARBE_HAUPT": "#72B846",
+  "FARBE_HELL": "#9BDC66",
+  "FARBE_3D_UEBERNEHMEN": false,
+  "_hinweis_farbe": "true = das 3D-Objekt bekommt die Markenfarbe statt seiner Standardfarbe"
+}
