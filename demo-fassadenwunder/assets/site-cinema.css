@@ -26,7 +26,7 @@ html.world-ready .world-poster{visibility:hidden;}
 .cinema-actions .btn-solid>span{margin-left:12px;}
 .cinema-actions .btn-line{font-size:.875rem;letter-spacing:.06em;}
 .cinema-copy .hero__trust{display:none;}
-.cinema-fact{display:flex;align-items:center;gap:24px;margin:30px 0 0;border-top:1px solid rgba(234,209,150,.3);padding-top:22px;}
+.cinema-fact{display:flex;align-items:center;gap:24px;margin:30px 0 0;border-top:1px solid rgba(155,232,122,.3);padding-top:22px;}
 .cinema-fact>b{font:400 clamp(3.4rem,6vw,5.8rem)/1 var(--display);color:var(--gold-bright);}
 .cinema-fact small{font-size:.40em;}
 .cinema-fact>span{font-size:.875rem;color:var(--cream-dim);line-height:1.65;}
@@ -44,7 +44,7 @@ html.world-ready .world-poster{visibility:hidden;}
 .cinema-chapters a>span{font-size:.75rem;font-variant-numeric:tabular-nums;color:var(--gold-bright);}
 .cinema-chapters a[aria-current="step"]{color:var(--cream);}
 .cinema-chapters a[aria-current="step"]>span{color:var(--cream);}
-.cinema-meter{width:100%;height:1px;margin-top:10px;background:rgba(234,209,150,.21);overflow:hidden;}
+.cinema-meter{width:100%;height:1px;margin-top:10px;background:rgba(155,232,122,.21);overflow:hidden;}
 .cinema-meter>span{display:block;width:100%;height:100%;background:var(--gold-bright);transform:scaleX(0);transform-origin:left;}
 .cinema-skip{position:absolute;right:clamp(20px,4.5vw,48px);top:28px;color:var(--cream-dim);text-decoration:none;font-size:.875rem;line-height:2.4;}
 .cinema-skip>span{margin-left:16px;color:var(--gold-bright);}
@@ -58,7 +58,7 @@ html.cinema-ready .cinema-panel.is-near{visibility:visible;}
 html.cinema-ready .cinema-panel.is-current{pointer-events:auto;}
 html.cinema-ready .cinema-ink{display:block;clip-path:inset(0 var(--ink-reveal,0%) 0 0);}
 html.cinema-ready .cinema-line>span:first-child{color:transparent;-webkit-text-stroke:1px rgba(244,239,228,.75);}
-html.cinema-ready .cinema-line--gold>span:first-child{-webkit-text-stroke-color:rgba(234,209,150,.8);}
+html.cinema-ready .cinema-line--gold>span:first-child{-webkit-text-stroke-color:rgba(155,232,122,.8);}
 html.cinema-ready .cinema-hud{position:absolute;left:50%;bottom:0;transform:translateX(-50%);}
 .chapter-rail a>span{border-radius:0;}
 @media(max-width:1000px){
