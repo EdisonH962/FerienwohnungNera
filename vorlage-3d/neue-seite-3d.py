@@ -30,6 +30,7 @@ OBJEKTE = {
     "zahnrad":    "Zahnrad – Metallbau, Schlosserei, KFZ, Maschinenbau",
     "baum":       "Baum – Gartenpflege, Baumpflege, Baumfällung, Gärtnerei",
     "fassade":    "Hausfassade – Fassadenreinigung, Maler, Gerüstbau, Gebäudereinigung",
+    "drohne":     "Reinigungsdrohne über Fassade – Drohnenreinigung, Gebäude-/Dachreinigung",
 }
 
 

@@ -92,9 +92,9 @@ html.cinema-ready .cinema-hud{position:absolute;left:50%;bottom:0;transform:tran
   .cinema-fact>b{font-size:3.7rem;}
   html.cinema-ready .cinema-panel{inset:85px 24px 128px;}
   html.cinema-ready .cinema-panel:first-child{padding-bottom:16px;}
-  /* Luft nach unten, damit auch dreizeilige Ueberschriften nicht in die
-     Kapitelnavigation laufen. Bei sehr langen Titeln ggf. weiter erhoehen. */
-  html.cinema-ready .cinema-panel:first-child{inset-block-end:190px;}
+  /* Lange Ueberschriften duerfen die Kapitelnavigation nicht ueberlappen */
+  html.cinema-ready .cinema-panel:first-child{inset-block-end:215px;}
+  .cinema-journey .cinema-panel:first-child .cinema-title{font-size:clamp(2.1rem,8.8vw,4.4rem);}
   html.cinema-ready .cinema-panel:first-child .cinema-copy .lede{display:none;}
   html.cinema-ready .cinema-panel:first-child .cinema-actions{margin-top:22px;}
   .cinema-chapters{gap:10px;justify-content:space-between;}
