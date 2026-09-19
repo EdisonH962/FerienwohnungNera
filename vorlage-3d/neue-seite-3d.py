@@ -31,6 +31,7 @@ OBJEKTE = {
     "baum":       "Baum – Gartenpflege, Baumpflege, Baumfällung, Gärtnerei",
     "fassade":    "Hausfassade – Fassadenreinigung, Maler, Gerüstbau, Gebäudereinigung",
     "drohne":     "Reinigungsdrohne über Fassade – Drohnenreinigung, Gebäude-/Dachreinigung",
+    "malerrolle": "Farbrolle an der Wand – Maler, Lackierer, Trockenbau, Renovierung",
 }
 
 

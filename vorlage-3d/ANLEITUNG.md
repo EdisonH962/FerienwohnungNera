@@ -27,6 +27,7 @@ der Branche an. In der JSON-Datei steuert `OBJEKT_3D`, welches geladen wird.
 | `baum` | Baum | Gartenpflege, Baumpflege, Baumfällung, Gärtnerei |
 | `fassade` | Hausfassade mit Wassertropfen | Fassadenreinigung, Maler, Stuckateur, Gerüstbau, Gebäudereinigung |
 | `drohne` | Reinigungsdrohne über Fassade | Drohnenreinigung, Gebäudereinigung, Dachreinigung, Solarreinigung |
+| `malerrolle` | Farbrolle an der Wand | Maler, Lackierer, Stuckateur, Trockenbau, Renovierung |
 
 Das Skript kopiert nur das gewählte Objekt in die fertige Seite — die anderen
 landen nicht beim Kunden.
